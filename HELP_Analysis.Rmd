@@ -1,0 +1,43 @@
+---
+title: Analysis of Australia's Higher Education Loan Program
+  (HELP) Statistics
+author: "Alana Dabelstein, Anh-Thu Hoang, Chenxi Zhang"
+date: "01/06/2023"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    theme: paper
+    fig_width: 7
+    fig_height: 4
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# Loading Libraries
+library(readxl)
+
+# Loading Data
+table_1 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 2, skip = 2, col_names = TRUE)
+table_2 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 3, skip = 2, col_names = TRUE)
+table_3 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 4, skip = 2, col_names = TRUE)
+table_4 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 5, skip = 2, col_names = TRUE)
+table_7 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 8, skip = 2, col_names = TRUE)
+```
+
+## Introduction
+
+## Analysis
+
+### Alana's Part
+
+### Anh-Thu's Part
+
+### Chenxi's Part
+
+## Conclusion
+
+## References
+
+## Appendix
