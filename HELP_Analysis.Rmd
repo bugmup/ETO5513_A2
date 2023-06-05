@@ -17,6 +17,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Loading Libraries
 library(readxl)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(scales)
 
 # Loading Data
 table_1 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 2, skip = 2, col_names = TRUE)
@@ -34,9 +38,31 @@ table_7 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 8, skip = 2,
 
 ### Anh-Thu's Part
 
-3. How does the distribution of taxable (HELP repayment) income of HELP debtors in Australian States and Territories in the 2021-22 financial year compare to a decade ago in 2011-12?
+3. What was the distribution of taxable (HELP repayment) income of HELP debtors in Australian States and Territories in the 2021-22 financial year?
 
-```{r Income Distribution}
+```{r Income Distribution, echo=FALSE, message=FALSE, warning=FALSE}
+
+income_dist <- table_7 %>%
+  select('Financial year', 'HELP repayment income', 'ACT', 'NSW', 'NT', 'QLD', 'SA', 'VIC', 'WA') %>%
+  filter(`Financial year` == "2021–22") %>%
+  filter(`HELP repayment income` != "Unknown")
+
+pivoted_dist <- income_dist %>%
+  pivot_longer(
+    cols = c('ACT', 'NSW', 'NT', 'QLD', 'SA', 'VIC', 'WA'),
+    names_to = "State",
+    values_to = "Count")
+
+income_factor = c("Up to $9,999", "$10,000 to $19,999", "$20,000 to $29,999", "$30,000 to $39,999", "$40,000 to $49,999", "$50,000 to $59,999", "$60,000 to $69,999", "$70,000 to $79,999", "$80,000 to $89,999", "$90,000 to $99,999", "$100,000 to $109,999", "$110,000 to $119,999", "$120,000 to $129,999", "$130,000 or more")
+
+dist_plot <- ggplot(data = pivoted_dist, aes(x = factor(`HELP repayment income`, level = income_factor), y = Count, fill = State)) +
+  geom_bar(stat="identity") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  scale_y_continuous(name="Count of Income", labels = label_comma()) +
+  xlab("Income Group") +
+  labs(title = "Distribution of HELP debtor income in Australian States and Territories", subtitle = "There is a postive skew in the distribution of HELP debtor income", caption = "Data source: Data.gov.au")
+
+dist_plot
 
 ```
 
