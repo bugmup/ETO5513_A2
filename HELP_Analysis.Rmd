@@ -34,6 +34,18 @@ table_7 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 8, skip = 2,
 
 ### Anh-Thu's Part
 
+3. How does the distribution of taxable (HELP repayment) income of HELP debtors in Australian States and Territories in the 2021-22 financial year compare to a decade ago in 2011-12?
+
+```{r Income Distribution}
+
+```
+
+4. What trend can be observed of the median taxable (HELP repayment) income of HELP debtors in Australian States and Territories over time?
+
+```{r Median Income}
+
+```
+
 ### Chenxi's Part
 
 ## Conclusion
