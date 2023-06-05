@@ -21,6 +21,7 @@ library(dplyr)
 library(tidyr)
 library(ggplot2)
 library(scales)
+library(tidyverse)
 
 # Loading Data
 table_1 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 2, skip = 2, col_names = TRUE)
@@ -68,8 +69,60 @@ dist_plot
 
 4. What trend can be observed of the median taxable (HELP repayment) income of HELP debtors in Australian States and Territories over time?
 
-```{r Median Income}
+```{r Median Income, echo=FALSE, message=FALSE, warning=FALSE}
 
+median_income <- table_7 %>%
+  select('Financial year', 'HELP repayment income', 'ACT', 'NSW', 'NT', 'QLD', 'SA', 'TAS', 'VIC', 'WA') %>%
+  filter(`HELP repayment income` != "Unknown")
+
+median_pivot <- median_income %>%
+  pivot_longer(
+    cols = c('ACT', 'NSW', 'NT', 'QLD', 'SA', 'TAS', 'VIC', 'WA'),
+    names_to = "State",
+    values_to = "Count")
+
+median_pivot <- mutate(median_pivot, `HELP repayment income` = case_when(
+    `HELP repayment income`=="Up to $9,999" ~ 9999,
+    `HELP repayment income`=="$10,000 to $19,999" ~ 19999, 
+    `HELP repayment income`=="$20,000 to $29,999" ~ 29999, 
+    `HELP repayment income`=="$30,000 to $39,999" ~ 39999, 
+    `HELP repayment income`=="$40,000 to $49,999" ~ 49999, 
+    `HELP repayment income`=="$50,000 to $59,999" ~ 59999, 
+    `HELP repayment income`=="$60,000 to $69,999" ~ 69999, 
+    `HELP repayment income`=="$70,000 to $79,999" ~ 79999, 
+    `HELP repayment income`=="$80,000 to $89,999" ~ 89999, 
+    `HELP repayment income`=="$90,000 to $99,999" ~ 99999, 
+    `HELP repayment income`=="$100,000 to $109,999" ~ 109999, 
+    `HELP repayment income`=="$110,000 to $119,999" ~ 119999, 
+    `HELP repayment income`=="$120,000 to $129,999" ~ 129999, 
+    `HELP repayment income`=="$130,000 or more" ~ 130000
+    ))
+
+median_pivoted <- median_pivot %>%
+  group_by(`Financial year`, State) %>%
+  summarise(
+    median_age = sort(rep(`HELP repayment income`,Count))[length(rep(`HELP repayment income`,Count))/2]
+  )
+
+median_pivoted <- mutate(median_pivoted, median_age = case_when(
+    median_age== 9999 ~ "Up to $9,999",
+    median_age==19999 ~ "$10,000 to $19,999", 
+    median_age==29999 ~ "$20,000 to $29,999", 
+    median_age==39999 ~ "$30,000 to $39,999", 
+    median_age==49999 ~ "$40,000 to $49,999", 
+    median_age==59999 ~ "$50,000 to $59,999", 
+    median_age==69999 ~ "$60,000 to $69,999", 
+    median_age==79999 ~ "$70,000 to $79,999", 
+    median_age==89999 ~ "$80,000 to $89,999", 
+    median_age==99999 ~ "$90,000 to $99,999", 
+    median_age==109999 ~ "$100,000 to $109,999", 
+    median_age==119999 ~ "$110,000 to $119,999", 
+    median_age==129999 ~ "$120,000 to $129,999", 
+    median_age==130000 ~ "$130,000 or more"
+    ))
+
+pivot_wide <- median_pivoted %>%
+  pivot_wider(names_from = State, values_from = median_age)
 
 ```
 ### Chenxi's Part
