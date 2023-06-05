@@ -43,13 +43,13 @@ table_7 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 8, skip = 2,
 ```{r Income Distribution, echo=FALSE, message=FALSE, warning=FALSE}
 
 income_dist <- table_7 %>%
-  select('Financial year', 'HELP repayment income', 'ACT', 'NSW', 'NT', 'QLD', 'SA', 'VIC', 'WA') %>%
+  select('Financial year', 'HELP repayment income', 'ACT', 'NSW', 'NT', 'QLD', 'SA', 'TAS', 'VIC', 'WA') %>%
   filter(`Financial year` == "2021–22") %>%
   filter(`HELP repayment income` != "Unknown")
 
 pivoted_dist <- income_dist %>%
   pivot_longer(
-    cols = c('ACT', 'NSW', 'NT', 'QLD', 'SA', 'VIC', 'WA'),
+    cols = c('ACT', 'NSW', 'NT', 'QLD', 'SA', 'TAS', 'VIC', 'WA'),
     names_to = "State",
     values_to = "Count")
 
@@ -70,8 +70,8 @@ dist_plot
 
 ```{r Median Income}
 
-```
 
+```
 ### Chenxi's Part
 
 ## Conclusion
