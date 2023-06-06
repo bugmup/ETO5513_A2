@@ -32,6 +32,79 @@ table_7 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 8, skip = 2,
 
 ### Alana's Part
 
+1. How does total outstanding debt and number of debtors change from the financial years 2005-06 to 2021-22? 
+
+2. Which groups are at risk of high debt? 
+
+Loading Data:
+```{r}
+table_8 <- read.csv("Data/HELP_DATA_TIDIED.csv")
+```
+
+Loading Libraries:
+```{r}
+library(tidyverse)
+library(gridExtra)
+library(knitr)
+library(bookdown)
+library(eeptools)
+```
+
+Mean Debtors and Mean Outstanding Debt Summary Tables:
+
+```{r}
+str(table_8)
+
+# Group By Year 
+table_8_year <- table_8 %>%
+  group_by(Year) %>%
+  summarise(mean_numDebt = mean(Num_Debtors), 
+            mean_outstandingDebt = mean(Outstanding_Debt), 
+            total_numDebt = sum(Num_Debtors), 
+            total_outstandingDebt = sum(Outstanding_Debt))
+  
+meanOut_plot <- ggplot(data = table_8_year, aes(x = Year, y = mean_outstandingDebt)) + 
+  geom_point(alpha = 0.8) + 
+  xlab("Year") + 
+  ylab("Mean Outstanding Debt ($)") + 
+  labs(title = "Mean Outstanding Debt From 2005-2021", subtitle = "Among All Ages and Sex") +
+  theme_minimal() + 
+  geom_smooth()
+
+
+meanDebtors_plot <- ggplot(data = table_8_year, aes(x = Year, y = mean_numDebt)) + 
+  geom_point(alpha = 0.8) + 
+  xlab("Year") + 
+  ylab("Mean Number of Debtors") + 
+  labs(title = "Mean Number of Debtors From 2005-2021", subtitle = "Among All Ages and Sex") +
+  theme_minimal() +  
+  geom_smooth()
+
+totalOut_plot <- ggplot(data = table_8_year, aes(x = Year, y = total_outstandingDebt)) + 
+  geom_point(alpha = 0.8) + 
+  xlab("Year") + 
+  ylab("Total Oustanding Debt ($)") + 
+  labs(title = "Total Outstanding Debt From 2005-2021", subtitle = "Among All Ages and Sex") +
+  theme_minimal() +  
+  geom_smooth()
+
+totalDebtors_plot <- ggplot(data = table_8_year, aes(x = Year, y = total_numDebt)) + 
+  geom_point(alpha = 0.8) + 
+  xlab("Year") + 
+  ylab("Total Number of Debtors") + 
+  labs(title = "Total Number of Debtors From 2005-2021", subtitle = "Among All Ages and Sex") +
+  theme_minimal() +  
+  geom_smooth()
+
+totalDebtors_plot
+
+grid.arrange()
+
+```
+
+
+
+
 ### Anh-Thu's Part
 
 ### Chenxi's Part
