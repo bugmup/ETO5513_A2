@@ -34,8 +34,6 @@ table_7 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 8, skip = 2,
 
 1. How does total outstanding debt and number of debtors change from the financial years 2005-06 to 2021-22? 
 
-2. Which groups are at risk of high debt? 
-
 Loading Data:
 ```{r}
 table_8 <- read.csv("Data/HELP_DATA_TIDIED.csv")
@@ -87,6 +85,51 @@ totalDebtors_plot <- ggplot(data = table_8_year, aes(x = Year, y = total_numDebt
 grid.arrange(totalOut_plot, totalDebtors_plot, nrow = 2)
 ```
 
+2. Which groups are at risk of high debt? 
+
+Looking At Sex:
+
+```{r}
+# Group By Year 
+table_8_sex <- table_8 %>%
+  group_by(Sex) %>%
+  summarise(mean_number_Debtors = mean(Num_Debtors), 
+            mean_outstandingDebt_billions = mean(Outstanding_Debt)/1000000000)
+
+kable(table_8_sex, 
+      caption = "Average Number of Debtors and Outstanding Debt (in billions) from 2005-2021",
+             digits = 2)
+```
+
+```{r}
+table_8_sex_year <- table_8 %>%
+  group_by(Sex, Year) %>%
+  summarise(mean_number_Debtors = mean(Num_Debtors), 
+            mean_outstandingDebt_billions = mean(Outstanding_Debt)/1000000000)
+
+
+plot3 <- ggplot(data = table_8_sex_year, aes(x = Year, y = mean_number_Debtors, col = Sex)) + 
+  geom_point(alpha = 0.8) + 
+  xlab("Year") + 
+  ylab("Mean Number of Debtors") + 
+  labs(title = "Mean Number of Debtors From 2005-2021", subtitle = "Among All Ages") +
+  theme_minimal() +  
+  geom_smooth()  + 
+  scale_y_continuous(labels = scales::comma)
+
+
+plot4 <- ggplot(data = table_8_sex_year, aes(x = Year, y = mean_outstandingDebt_billions, col = Sex)) + 
+  geom_point(alpha = 0.8) + 
+  xlab("Year") + 
+  ylab("Mean Outstanding Debt ($) in billions") + 
+  labs(title = "Mean Outstanding Debt From 2005-2021", subtitle = "Among All Ages") +
+  theme_minimal() +  
+  geom_smooth()  + 
+  scale_y_continuous(labels = scales::comma)
+
+grid.arrange(plot3, plot4, nrow = 2)
+
+```
 
 
 ### Anh-Thu's Part
