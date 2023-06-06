@@ -53,40 +53,26 @@ library(eeptools)
 Mean Debtors and Mean Outstanding Debt Summary Tables:
 
 ```{r}
-str(table_8)
-
 # Group By Year 
 table_8_year <- table_8 %>%
   group_by(Year) %>%
-  summarise(mean_numDebt = mean(Num_Debtors), 
-            mean_outstandingDebt = mean(Outstanding_Debt), 
-            total_numDebt = sum(Num_Debtors), 
-            total_outstandingDebt = sum(Outstanding_Debt))
+  summarise(total_number_Debtors_millions = sum(Num_Debtors)/1000000, 
+            total_outstandingDebt_billions = sum(Outstanding_Debt)/1000000000)
   
-meanOut_plot <- ggplot(data = table_8_year, aes(x = Year, y = mean_outstandingDebt)) + 
-  geom_point(alpha = 0.8) + 
-  xlab("Year") + 
-  ylab("Mean Outstanding Debt ($)") + 
-  labs(title = "Mean Outstanding Debt From 2005-2021", subtitle = "Among All Ages and Sex") +
-  theme_minimal() + 
-  geom_smooth()
+kable(table_8_year, 
+      caption = "Total Debtors (in millions) and Total Oustanding Debt (in billions)",
+             digits = 2)
+```
 
-
-meanDebtors_plot <- ggplot(data = table_8_year, aes(x = Year, y = mean_numDebt)) + 
-  geom_point(alpha = 0.8) + 
-  xlab("Year") + 
-  ylab("Mean Number of Debtors") + 
-  labs(title = "Mean Number of Debtors From 2005-2021", subtitle = "Among All Ages and Sex") +
-  theme_minimal() +  
-  geom_smooth()
-
+```{r}
 totalOut_plot <- ggplot(data = table_8_year, aes(x = Year, y = total_outstandingDebt)) + 
   geom_point(alpha = 0.8) + 
   xlab("Year") + 
   ylab("Total Oustanding Debt ($)") + 
   labs(title = "Total Outstanding Debt From 2005-2021", subtitle = "Among All Ages and Sex") +
   theme_minimal() +  
-  geom_smooth()
+  geom_smooth()  + 
+  scale_y_continuous(labels = scales::comma)
 
 totalDebtors_plot <- ggplot(data = table_8_year, aes(x = Year, y = total_numDebt)) + 
   geom_point(alpha = 0.8) + 
@@ -94,14 +80,12 @@ totalDebtors_plot <- ggplot(data = table_8_year, aes(x = Year, y = total_numDebt
   ylab("Total Number of Debtors") + 
   labs(title = "Total Number of Debtors From 2005-2021", subtitle = "Among All Ages and Sex") +
   theme_minimal() +  
-  geom_smooth()
+  geom_smooth()  + 
+  scale_y_continuous(labels = scales::comma)
 
-totalDebtors_plot
 
-grid.arrange()
-
+grid.arrange(totalOut_plot, totalDebtors_plot, nrow = 2)
 ```
-
 
 
 
