@@ -67,7 +67,7 @@ dist_plot
 
 ```
 
-4. What trend can be observed of the median taxable (HELP repayment) income of HELP debtors in Australian States and Territories over time?
+4. What trend can be observed of the median taxable (HELP repayment) income of HELP debtors in Australia over time?
 
 ```{r Median Income, echo=FALSE, message=FALSE, warning=FALSE}
 
@@ -92,10 +92,12 @@ median_pivot <- mutate(median_pivot, `HELP repayment income` = case_when(
     `HELP repayment income`=="$70,000 to $79,999" ~ 79999, 
     `HELP repayment income`=="$80,000 to $89,999" ~ 89999, 
     `HELP repayment income`=="$90,000 to $99,999" ~ 99999, 
-    `HELP repayment income`=="$100,000 to $109,999" ~ 109999, 
+    `HELP repayment income`=="$100,000 or more" ~ 100000,
+    `HELP repayment income`=="$100,000 to $109,999" ~ 109999,
     `HELP repayment income`=="$110,000 to $119,999" ~ 119999, 
     `HELP repayment income`=="$120,000 to $129,999" ~ 129999, 
-    `HELP repayment income`=="$130,000 or more" ~ 130000
+    `HELP repayment income`=="$130,000 or more" ~ 130000,
+    is.na(`HELP repayment income`) ~ 0
     ))
 
 median_pivoted <- median_pivot %>%
@@ -114,7 +116,8 @@ median_pivoted <- mutate(median_pivoted, median_income = case_when(
     median_income==69999 ~ "$60,000 to $69,999", 
     median_income==79999 ~ "$70,000 to $79,999", 
     median_income==89999 ~ "$80,000 to $89,999", 
-    median_income==99999 ~ "$90,000 to $99,999", 
+    median_income==99999 ~ "$90,000 to $99,999",
+    median_income==100000 ~ "$100,000 or more",
     median_income==109999 ~ "$100,000 to $109,999", 
     median_income==119999 ~ "$110,000 to $119,999", 
     median_income==129999 ~ "$120,000 to $129,999", 
@@ -124,7 +127,7 @@ median_pivoted <- mutate(median_pivoted, median_income = case_when(
 median_plot <- ggplot(data = median_pivoted, aes(x = `Financial year`, y = median_income, group = 1)) +
   geom_line() +
   geom_point() +
-  labs(title = "Median taxable income of HELP debtors in Australia from 2009 to 2021 financial year", 
+  labs(title = "Median taxable income group of HELP debtors in Australia from 2009 to 2021 financial year", 
        subtitle = "There has been a positive increase in median taxable income over time", 
        caption = "Data source: Data.gov.au") +
   ylab("Income Group") +
