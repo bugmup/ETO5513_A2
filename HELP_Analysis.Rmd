@@ -22,6 +22,7 @@ library(tidyr)
 library(ggplot2)
 library(scales)
 library(tidyverse)
+library(knitr)
 
 # Loading Data
 table_1 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 2, skip = 2, col_names = TRUE)
@@ -65,6 +66,8 @@ dist_plot <- ggplot(data = pivoted_dist, aes(x = factor(`HELP repayment income`,
 
 dist_plot
 
+kable(income_dist, col.names = c("Financial Year","HELP Repayment Income", "ACT", "NSW", "NT", "QLD", "SA", "TAS", "VIC", "WA"), caption = "Table 3: Table of count of outstanding HELP debtors in each income group by State or Territory in 2021-22")
+
 ```
 
 4. What trend can be observed of the median and mean taxable (HELP repayment) income of HELP debtors in Australia over time?
@@ -103,6 +106,7 @@ median_pivot <- mutate(median_pivot, `HELP repayment income` = case_when(
 median_pivoted <- median_pivot %>%
   group_by(`Financial year`) %>%
   summarise(
+    `Count of Debtors` = sum(Count),
     `Median Income` = sort(rep(`HELP repayment income`,Count))[length(rep(`HELP repayment income`,Count))/2],
     `Mean Income` = sum(sort(rep(`HELP repayment income`,Count)))/length(sort(rep(`HELP repayment income`,Count)))
   )
@@ -162,6 +166,8 @@ median_plot <- ggplot(median_pivoted2, aes(x=`Financial year`)) +
         axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
 median_plot
+
+kable(median_pivoted2, col.names = c("Financial Year", "Count of Outstanding Debtors", "Median Income", "Mean Income"), caption = "Table 4: Table of the median and mean taxable income group of outstanding HELP debtors in Australia from 2009-10 to 2021-22")
 
 ```
 
