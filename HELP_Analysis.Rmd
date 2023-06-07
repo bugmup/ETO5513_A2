@@ -67,7 +67,7 @@ dist_plot
 
 ```
 
-4. What trend can be observed of the median taxable (HELP repayment) income of HELP debtors in Australia over time?
+4. What trend can be observed of the median and mean taxable (HELP repayment) income of HELP debtors in Australia over time?
 
 ```{r Median Income, echo=FALSE, message=FALSE, warning=FALSE}
 
@@ -103,41 +103,66 @@ median_pivot <- mutate(median_pivot, `HELP repayment income` = case_when(
 median_pivoted <- median_pivot %>%
   group_by(`Financial year`) %>%
   summarise(
-    median_income = sort(rep(`HELP repayment income`,Count))[length(rep(`HELP repayment income`,Count))/2]
+    `Median Income` = sort(rep(`HELP repayment income`,Count))[length(rep(`HELP repayment income`,Count))/2],
+    `Mean Income` = sum(sort(rep(`HELP repayment income`,Count)))/length(sort(rep(`HELP repayment income`,Count)))
   )
 
-median_pivoted <- mutate(median_pivoted, median_income = case_when(
-    median_income== 9999 ~ "Up to $9,999",
-    median_income==19999 ~ "$10,000 to $19,999", 
-    median_income==29999 ~ "$20,000 to $29,999", 
-    median_income==39999 ~ "$30,000 to $39,999", 
-    median_income==49999 ~ "$40,000 to $49,999", 
-    median_income==59999 ~ "$50,000 to $59,999", 
-    median_income==69999 ~ "$60,000 to $69,999", 
-    median_income==79999 ~ "$70,000 to $79,999", 
-    median_income==89999 ~ "$80,000 to $89,999", 
-    median_income==99999 ~ "$90,000 to $99,999",
-    median_income==100000 ~ "$100,000 or more",
-    median_income==109999 ~ "$100,000 to $109,999", 
-    median_income==119999 ~ "$110,000 to $119,999", 
-    median_income==129999 ~ "$120,000 to $129,999", 
-    median_income==130000 ~ "$130,000 or more"
+median_pivoted <- mutate(median_pivoted, `Median Income` = case_when(
+    `Median Income`==9999 ~ "Up to $9,999",
+    `Median Income`==19999 ~ "$10,000 to $19,999", 
+    `Median Income`==29999 ~ "$20,000 to $29,999", 
+    `Median Income`==39999 ~ "$30,000 to $39,999", 
+    `Median Income`==49999 ~ "$40,000 to $49,999", 
+    `Median Income`==59999 ~ "$50,000 to $59,999", 
+    `Median Income`==69999 ~ "$60,000 to $69,999", 
+    `Median Income`==79999 ~ "$70,000 to $79,999", 
+    `Median Income`==89999 ~ "$80,000 to $89,999", 
+    `Median Income`==99999 ~ "$90,000 to $99,999",
+    `Median Income`==100000 ~ "$100,000 or more",
+    `Median Income`==109999 ~ "$100,000 to $109,999", 
+    `Median Income`==119999 ~ "$110,000 to $119,999", 
+    `Median Income`==129999 ~ "$120,000 to $129,999", 
+    `Median Income`==130000 ~ "$130,000 or more"
     ))
 
-median_plot <- ggplot(data = median_pivoted, aes(x = `Financial year`, y = median_income, group = 1)) +
-  geom_line() +
-  geom_point() +
+median_pivoted2 <- mutate(median_pivoted, `Mean Income` = case_when(
+    `Mean Income`<=9999 ~ "Up to $9,999",
+    `Mean Income`<=19999 ~ "$10,000 to $19,999", 
+    `Mean Income`<=29999 ~ "$20,000 to $29,999", 
+    `Mean Income`<=39999 ~ "$30,000 to $39,999", 
+    `Mean Income`<=49999 ~ "$40,000 to $49,999", 
+    `Mean Income`<=59999 ~ "$50,000 to $59,999", 
+    `Mean Income`<=69999 ~ "$60,000 to $69,999", 
+    `Mean Income`<=79999 ~ "$70,000 to $79,999", 
+    `Mean Income`<=89999 ~ "$80,000 to $89,999", 
+    `Mean Income`<=99999 ~ "$90,000 to $99,999",
+    `Mean Income`==100000 ~ "$100,000 or more",
+    `Mean Income`<=109999 ~ "$100,000 to $109,999", 
+    `Mean Income`<=119999 ~ "$110,000 to $119,999", 
+    `Mean Income`<=129999 ~ "$120,000 to $129,999", 
+    `Mean Income`<=130000 ~ "$130,000 or more"
+    ))
+
+median_plot <- ggplot(median_pivoted2, aes(x=`Financial year`)) + 
+  geom_line(aes(y = `Median Income`, group = 1, color = "Median")) +
+  geom_point(aes(y = `Median Income`, group = 1, color = "Median")) +
+  geom_line(aes(y = `Mean Income`, group = 1, color = "Mean")) +
+  geom_point(aes(y = `Mean Income`, group = 1, color = "Mean")) +
+  scale_color_manual(values = c(Median = "steelblue", Mean = "darkred"), 
+                     labels = c(Median = "Median income", Mean = "Mean income")) +
   labs(title = "Median taxable income group of HELP debtors in Australia from 2009 to 2021 financial year", 
        subtitle = "There has been a positive increase in median taxable income over time", 
        caption = "Data source: Data.gov.au") +
   ylab("Income Group") +
   xlab("Year") +
+  guides(col=guide_legend("Legend")) +
   theme(panel.grid.major = element_line(color = "grey",
                                         size = 0.5,
                                         linetype = 3),
         axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
 median_plot
+
 ```
 
 ### Chenxi's Part
