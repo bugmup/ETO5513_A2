@@ -48,8 +48,8 @@ library(eeptools)
 # Group By Year 
 table_8_year <- table_8 %>%
   group_by(Year) %>%
-  summarise(total_number_Debtors_millions = sum(Num_Debtors)/1000000, 
-            total_outstandingDebt_billions = sum(Outstanding_Debt)/1000000000)
+  summarise(`Total Number of Debtors (millions)` = sum(Num_Debtors)/1000000, 
+            `Total Outstanding Debt (billions $)` = sum(Outstanding_Debt)/1000000000) 
 
 # Create Table
 kable(table_8_year, 
@@ -57,21 +57,21 @@ kable(table_8_year,
              digits = 2)
 ```
 
-```{r figure1, warning=FALSE, message=FALSE, include=FALSE}
-totalOut_plot <- ggplot(data = table_8_year, aes(x = Year, y = total_outstandingDebt_billions)) + 
+```{r figure1, warning=FALSE, message=FALSE, include=FALSE, fig.align='center', fig.cap="Total outstanding debt and number of debtors from the financial years 2005-06 to 2021-22"}
+totalOut_plot <- ggplot(data = table_8_year, aes(x = Year, y = `Total Outstanding Debt (billions $)`)) + 
   geom_point(alpha = 0.8) + 
   xlab("Year") + 
-  ylab("Total Oustanding Debt ($)") + 
-  labs(title = "Total Outstanding Debt ($ in billions) From 2005-2021", subtitle = "Among All Ages and Sex") +
+  ylab("Total Oustanding Debt ($) in billions") + 
+  labs(title = "a) Outstanding Debt Has Rapidly Increased From 2005", subtitle = "Total Outstanding Debt From 2005-2021") +
   theme_minimal() +  
   geom_smooth()  + 
   scale_y_continuous(labels = scales::comma)
 
-totalDebtors_plot <- ggplot(data = table_8_year, aes(x = Year, y = total_number_Debtors_millions)) + 
+totalDebtors_plot <- ggplot(data = table_8_year, aes(x = Year, y = `Total Number of Debtors (millions)`)) + 
   geom_point(alpha = 0.8) + 
   xlab("Year") + 
-  ylab("Total Number of Debtors") + 
-  labs(title = "Total Number of Debtors ($ in millions) From 2005-2021", subtitle = "Among All Ages and Sex") +
+  ylab("Total Debtors in millions") + 
+  labs(title = "b) Number of Debtors Has Rapidly Increased From 2005", subtitle = "Total Number of Debtors From 2005-2021") +
   theme_minimal() +  
   geom_smooth()  + 
   scale_y_continuous(labels = scales::comma)
@@ -86,15 +86,15 @@ grid.arrange(totalOut_plot, totalDebtors_plot, nrow = 2)
 # Group By Year 
 table_8_sex <- table_8 %>%
   group_by(Sex) %>%
-  summarise(mean_number_Debtors = mean(Num_Debtors), 
-            mean_outstandingDebt_billions = mean(Outstanding_Debt)/1000000000)
+  summarise(`Mean Number of Debtors` = mean(Num_Debtors), 
+            `Mean Outstanding Debt (in billions)` = mean(Outstanding_Debt)/1000000000)
 
 kable(table_8_sex, 
-      caption = "Average Number of Debtors and Outstanding Debt (in billions) from 2005-2021",
+      caption = "Average Debtors and Outstanding Debt By Sex from 2005-2021",
              digits = 2)
 ```
 
-```{r figure2, include=FALSE, message=FALSE, warning=FALSE}
+```{r figure2, include=FALSE, message=FALSE, warning=FALSE, fig.align='center'}
 table_8_sex_year <- table_8 %>%
   group_by(Sex, Year) %>%
   summarise(mean_number_Debtors = mean(Num_Debtors), 
@@ -105,7 +105,7 @@ plot3 <- ggplot(data = table_8_sex_year, aes(x = Year, y = mean_number_Debtors, 
   geom_point(alpha = 0.8) + 
   xlab("Year") + 
   ylab("Mean Number of Debtors") + 
-  labs(title = "Mean Number of Debtors From 2005-2021", subtitle = "Among All Ages") +
+  labs(title = "a) There is an Increase in Both Male and Female Debtors", subtitle = "Females on average are more likely to be in debt") +
   theme_minimal() +  
   geom_smooth()  + 
   scale_y_continuous(labels = scales::comma)
@@ -115,7 +115,7 @@ plot4 <- ggplot(data = table_8_sex_year, aes(x = Year, y = mean_outstandingDebt_
   geom_point(alpha = 0.8) + 
   xlab("Year") + 
   ylab("Mean Outstanding Debt ($) in billions") + 
-  labs(title = "Mean Outstanding Debt From 2005-2021", subtitle = "Among All Ages") +
+  labs(title = "b) Females Have a Greater Outstanding Debt than Males", subtitle = "There is an increasing gap between outstanding debt by sex") +
   theme_minimal() +  
   geom_smooth()  + 
   scale_y_continuous(labels = scales::comma)
@@ -131,15 +131,15 @@ Looking at Ages:
 
 table_8_age <- table_8 %>%
   group_by(Age_Range) %>%
-  summarise(mean_Debtors = mean(Num_Debtors)/1000, 
-            mean_OustandingDebt = mean(Outstanding_Debt)/1000000)
+  summarise(`Mean Number of Debtors (in thousands)` = mean(Num_Debtors)/1000, 
+            `Mean Oustanding Debt (in millions)` = mean(Outstanding_Debt)/1000000)
 
 kable(table_8_age, 
-      caption = "Average Number of Debtors (in thousands) and Outstanding Debt (in millions) from 2005-2021",
+      caption = "Average Number of Debtors and Outstanding Debt by Age Group from 2005-2021",
              digits = 2)
 ```
 
-```{r figure3, include=FALSE, message=FALSE, warning=FALSE}
+```{r figure3, include=FALSE, message=FALSE, warning=FALSE, fig.align='center'}
 # group by age and year 
 
 table_8_age_year <- table_8 %>%
@@ -152,7 +152,7 @@ plot5 <- ggplot(data = table_8_age_year, aes(x = Year, y = mean_NumDebtors, col 
   geom_point(alpha = 0.8) + 
   xlab("Year") + 
   ylab("Mean Number of Debtors") + 
-  labs(title = "Mean Number of Debtors From 2005-2021", subtitle = "") +
+  labs(title = "a) Ages 20-29 are the Largest Group of Debtors", subtitle = "Most age ranges have an increase in the number of debtors") +
   theme_minimal() +  
   geom_smooth()  + 
   scale_y_continuous(labels = scales::comma)
@@ -161,7 +161,7 @@ plot6 <- ggplot(data = table_8_age_year, aes(x = Year, y = mean_OustandingDebt, 
   geom_point(alpha = 0.8) + 
   xlab("Year") + 
   ylab("Mean Outstanding Debt ($)") + 
-  labs(title = "Mean Outstanding Debt From 2005-2021", subtitle = "") +
+  labs(title = "b) Ages 20-29 Have the Highest Outstanding Debt", subtitle = "There is a rapid increase for ages 30-39") +
   theme_minimal() +  
   geom_smooth()  + 
   scale_y_continuous(labels = scales::comma)
