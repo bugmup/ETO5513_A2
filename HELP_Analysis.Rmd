@@ -32,7 +32,7 @@ table_7 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 8, skip = 2,
 
 ### Alana's Part
 
-1. How does total outstanding debt and number of debtors change from the financial years 2005-06 to 2021-22? 
+## How does total outstanding debt and number of debtors change from the financial years 2005-06 to 2021-22? {#yearsection}
 
 ```{r loading, include=FALSE, message=FALSE, warning=FALSE}
 table_8 <- read.csv("Data/HELP_DATA_TIDIED.csv")
@@ -80,7 +80,12 @@ totalDebtors_plot <- ggplot(data = table_8_year, aes(x = Year, y = `Total Number
 grid.arrange(totalOut_plot, totalDebtors_plot, nrow = 2)
 ```
 
-2. Which groups are at risk of high debt? 
+- Total number of debtors increased from 1.18 million in 2005 to 3 million in 2021. The same results can be observed for outstanding where the total was $12.39 billion in 2005 which rose to $74.39 billion in 2021. 
+- There was a rapid increase from 2010 to 2015, where total outstanding debt rose by $25.32 billion. 
+- A small decrease in debtors can be observed from 2018 to 2019 which may be a factor for the apparent plateau in outstanding debt from years 2018-2020. 
+
+
+### Average Debtors and Oustanding Debt by Sex {#sexsection}
 
 ```{r table2, include=FALSE, message=FALSE, warning=FALSE}
 # Group By Year 
@@ -124,7 +129,10 @@ grid.arrange(plot3, plot4, nrow = 2)
 
 ```
 
-Looking at Ages:
+- Grouping mean debtors and outstanding debt by sex shows that there are significantly more female debtors than males. From 2005-2021, on average, 158, 046.2 females are in debt, compared to 103,717.2 males. This difference in average of 54,329 could factor for the $750 million difference in average outstanding debt. 
+- A increasing gap can be observed between the number of debtors and outstanding debt between females and males. 
+
+### Average Debtors and Oustanding Debt by Age Group {#agesection}
 
 ```{r table3, include=FALSE, message=FALSE, warning=FALSE}
 # group by age 
@@ -148,6 +156,8 @@ table_8_age_year <- table_8 %>%
   summarise(mean_NumDebtors = mean(Num_Debtors), 
             mean_OustandingDebt = mean(Outstanding_Debt)) 
 
+# kable(table_8_age_year)
+
 plot5 <- ggplot(data = table_8_age_year, aes(x = Year, y = mean_NumDebtors, col = Age_Range)) + 
   geom_point(alpha = 0.8) + 
   xlab("Year") + 
@@ -169,11 +179,20 @@ plot6 <- ggplot(data = table_8_age_year, aes(x = Year, y = mean_OustandingDebt, 
 grid.arrange(plot5, plot6, nrow = 2)
 ```
 
+- The age group with the greatest number of debtors is 20-29, followed by 30-39. Excluding the group for unknown age, 70+ has the lowest number of debtors. 
+- The same pattern can be observed for mean outstanding debt. The age group 20-29 on average have an outstanding debt of $11,589.59 million, compared to $79.4 million for 70+. 
+- Younger age groups have a higher risk of having debt than older age groups. The one exception is for the youngest age group 0-19. 
+- An increase in the number of debtors and outstanding debt over the period 2005-2021 can be seen for most age groups, with steeper inclines for 20-29, 30-39 and 40-49. 
+- From 2018-2021, there is a sudden drop in number of debtors for 0–19-year-olds, which also results in a drop in outstanding debt. 
+
+
 ### Anh-Thu's Part
 
 ### Chenxi's Part
 
 ## Conclusion
+
+The number of debtors and outstanding debt has steadily increased since 2005 \@ref(yearsection). From 2005 to 2021, there has been an increase of 1.82 million people in debt. During this same period, there has been an increase in outstanding debt of $62 billion. On average, females are $750 million higher in outstanding debt than males \@ref(sexsection). Also, on average there are 54,329 more females in debt than males. There is an increase in the gap between males and females in debt, creating a higher financial risk for females. Additionally, the group with the highest risk of financial debt is 20-29, followed by 30-39, 40-49, 50-59, 60-69 and 70+, respectively \@ref(agesection). It appears with age, the risk of debt decreases. All age groups increased in debtors and outstanding debt for 2005-2021, except for the age group 0-19, which saw a sudden drop in 2018-2021. 
 
 ## References
 
