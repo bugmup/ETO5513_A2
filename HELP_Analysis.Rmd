@@ -173,14 +173,14 @@ kable(median_pivoted2, col.names = c("Financial Year", "Count of Outstanding Deb
 
 median_plot
 ```
-Table 3 presents the counts of students with outstanding HELP debt in each taxable income group, incremented by $10,000, in all States and Territories in the 2021 fiscal year. The distribution of which is illustrated as a bar chart in Figure 3. Across all income groups, NSW, QLD and VIC have the highest number of outstanding HELP debtors, and the most debtors earned within the $20,000 to $29,999 income group in 2021. 
 
-Table 4 presents the calculations of median and mean earned income groups in Australia from 2009 to 2021. The trends of which are illustrated as a line chart in Figure 4. Both the median and mean income follow the same increasing trend while the median sits below the mean by 1 income group. Both have increased by 1 income group ($10,000) since 2009. The median income group in 2021 was $40,000 to $49,999, while the mean was $50,000 to $59,999.
+Table 3 presents the counts of students with outstanding HELP debt in each taxable income group, incremented by $10,000, in all States and Territories in the 2021 fiscal year. The distribution of which is depicted as a bar chart in Figure 3. Across all income groups, NSW, QLD and VIC have the highest number of outstanding HELP debtors, and most debtors earned within the “$20,000 – $29,999” income group. 
 
-It can be concluded that most debtors end up earning below the mean income and the number of debtors earning above the mean diminishes as the income group increases. However, a larger number of debtors in the “$130,000 or more” income group is observed as it is an exception to the $10,000 increment rule.
+Table 4 presents the calculations of median and mean (average) earned income groups in Australia from 2009 to 2021. The trends are illustrated in the line graph in Figure 4. The median and average income follow the same slight positive trend, increasing overall by one income group ($10,000) since 2009. The median typically sits below the average by one income group. In 2021, the median was “$40,000 – $49,999”, while the average was “$50,000 – $59,999”.
 
-The limitation of this analysis is that the data fails to account for the size of the HELP debt incurred and how far along each debtor is in their career. Greater debt may indicate higher education or further progressed careers may indicate more employability which may impact the income earned. 
+Based on the analysis, most debtors earn below the average income, while the number of debtors earning above the average diminishes as the income group increases. Except for the “$130,000 or more” income group as this group does not observe the $10,000 increment rule.
 
+This analysis is limited as the data fails to account for the size of HELP debt incurred and how far along each debtor is in their career. Higher debt may indicate higher education or further progressed careers may positively impact income earned.
 
 ### Chenxi's Part
 
