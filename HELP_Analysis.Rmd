@@ -34,13 +34,9 @@ table_7 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 8, skip = 2,
 
 1. How does total outstanding debt and number of debtors change from the financial years 2005-06 to 2021-22? 
 
-Loading Data:
-```{r}
+```{r loading, include=FALSE, message=FALSE, warning=FALSE}
 table_8 <- read.csv("Data/HELP_DATA_TIDIED.csv")
-```
 
-Loading Libraries:
-```{r}
 library(tidyverse)
 library(gridExtra)
 library(knitr)
@@ -48,35 +44,34 @@ library(bookdown)
 library(eeptools)
 ```
 
-Mean Debtors and Mean Outstanding Debt Summary Tables:
-
-```{r}
+```{r table1, message=FALSE, warning=FALSE, include=FALSE}
 # Group By Year 
 table_8_year <- table_8 %>%
   group_by(Year) %>%
   summarise(total_number_Debtors_millions = sum(Num_Debtors)/1000000, 
             total_outstandingDebt_billions = sum(Outstanding_Debt)/1000000000)
-  
+
+# Create Table
 kable(table_8_year, 
       caption = "Total Debtors (in millions) and Total Oustanding Debt (in billions)",
              digits = 2)
 ```
 
-```{r}
-totalOut_plot <- ggplot(data = table_8_year, aes(x = Year, y = total_outstandingDebt)) + 
+```{r figure1, warning=FALSE, message=FALSE, include=FALSE}
+totalOut_plot <- ggplot(data = table_8_year, aes(x = Year, y = total_outstandingDebt_billions)) + 
   geom_point(alpha = 0.8) + 
   xlab("Year") + 
   ylab("Total Oustanding Debt ($)") + 
-  labs(title = "Total Outstanding Debt From 2005-2021", subtitle = "Among All Ages and Sex") +
+  labs(title = "Total Outstanding Debt ($ in billions) From 2005-2021", subtitle = "Among All Ages and Sex") +
   theme_minimal() +  
   geom_smooth()  + 
   scale_y_continuous(labels = scales::comma)
 
-totalDebtors_plot <- ggplot(data = table_8_year, aes(x = Year, y = total_numDebt)) + 
+totalDebtors_plot <- ggplot(data = table_8_year, aes(x = Year, y = total_number_Debtors_millions)) + 
   geom_point(alpha = 0.8) + 
   xlab("Year") + 
   ylab("Total Number of Debtors") + 
-  labs(title = "Total Number of Debtors From 2005-2021", subtitle = "Among All Ages and Sex") +
+  labs(title = "Total Number of Debtors ($ in millions) From 2005-2021", subtitle = "Among All Ages and Sex") +
   theme_minimal() +  
   geom_smooth()  + 
   scale_y_continuous(labels = scales::comma)
@@ -87,9 +82,7 @@ grid.arrange(totalOut_plot, totalDebtors_plot, nrow = 2)
 
 2. Which groups are at risk of high debt? 
 
-Looking At Sex:
-
-```{r}
+```{r table2, include=FALSE, message=FALSE, warning=FALSE}
 # Group By Year 
 table_8_sex <- table_8 %>%
   group_by(Sex) %>%
@@ -101,7 +94,7 @@ kable(table_8_sex,
              digits = 2)
 ```
 
-```{r}
+```{r figure2, include=FALSE, message=FALSE, warning=FALSE}
 table_8_sex_year <- table_8 %>%
   group_by(Sex, Year) %>%
   summarise(mean_number_Debtors = mean(Num_Debtors), 
@@ -131,6 +124,50 @@ grid.arrange(plot3, plot4, nrow = 2)
 
 ```
 
+Looking at Ages:
+
+```{r table3, include=FALSE, message=FALSE, warning=FALSE}
+# group by age 
+
+table_8_age <- table_8 %>%
+  group_by(Age_Range) %>%
+  summarise(mean_Debtors = mean(Num_Debtors)/1000, 
+            mean_OustandingDebt = mean(Outstanding_Debt)/1000000)
+
+kable(table_8_age, 
+      caption = "Average Number of Debtors (in thousands) and Outstanding Debt (in millions) from 2005-2021",
+             digits = 2)
+```
+
+```{r figure3, include=FALSE, message=FALSE, warning=FALSE}
+# group by age and year 
+
+table_8_age_year <- table_8 %>%
+  group_by(Age_Range, Year) %>%
+  filter(Age_Range != "Unknown") %>%
+  summarise(mean_NumDebtors = mean(Num_Debtors), 
+            mean_OustandingDebt = mean(Outstanding_Debt)) 
+
+plot5 <- ggplot(data = table_8_age_year, aes(x = Year, y = mean_NumDebtors, col = Age_Range)) + 
+  geom_point(alpha = 0.8) + 
+  xlab("Year") + 
+  ylab("Mean Number of Debtors") + 
+  labs(title = "Mean Number of Debtors From 2005-2021", subtitle = "") +
+  theme_minimal() +  
+  geom_smooth()  + 
+  scale_y_continuous(labels = scales::comma)
+
+plot6 <- ggplot(data = table_8_age_year, aes(x = Year, y = mean_OustandingDebt, col = Age_Range)) + 
+  geom_point(alpha = 0.8) + 
+  xlab("Year") + 
+  ylab("Mean Outstanding Debt ($)") + 
+  labs(title = "Mean Outstanding Debt From 2005-2021", subtitle = "") +
+  theme_minimal() +  
+  geom_smooth()  + 
+  scale_y_continuous(labels = scales::comma)
+
+grid.arrange(plot5, plot6, nrow = 2)
+```
 
 ### Anh-Thu's Part
 
