@@ -42,7 +42,7 @@ table_7 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 8, skip = 2,
 
 3. What was the distribution of taxable (HELP repayment) income of HELP debtors in Australian States and Territories in the 2021-22 financial year?
 
-```{r Income Distribution, echo=FALSE, message=FALSE, warning=FALSE}
+```{r Income Distribution, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center'}
 
 income_dist <- table_7 %>%
   select('Financial year', 'HELP repayment income', 'ACT', 'NSW', 'NT', 'QLD', 'SA', 'TAS', 'VIC', 'WA') %>%
@@ -76,7 +76,7 @@ dist_plot
 
 4. What trend can be observed of the median and mean taxable (HELP repayment) income of HELP debtors in Australia over time?
 
-```{r Median Income, echo=FALSE, message=FALSE, warning=FALSE}
+```{r Median Income, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center', fig.cap="Figure 4: Median and mean income of HELP debtors in Australia from 2009 to 2021"}
 
 median_income <- table_7 %>%
   select('Financial year', 'HELP repayment income', 'ACT', 'NSW', 'NT', 'QLD', 'SA', 'TAS', 'VIC', 'WA') %>%
@@ -174,13 +174,13 @@ kable(median_pivoted2, col.names = c("Financial Year", "Count of Outstanding Deb
 median_plot
 ```
 
-Table 3 presents the counts of students with outstanding HELP debt in each taxable income group, incremented by $10,000, in all States and Territories in the 2021 fiscal year. The distribution of which is depicted as a bar chart in Figure 3. Across all income groups, NSW, QLD and VIC have the highest number of outstanding HELP debtors, and most debtors earned within the “$20,000 – $29,999” income group. 
+Table 3 presents the counts of students with outstanding HELP debt in each taxable income group, incremented by $10,000, in all States and Territories in the 2021 fiscal year. The distribution of which is depicted as a bar chart in Figure 3. Across all income groups, NSW, QLD and VIC have the highest number of outstanding HELP debtors, and most debtors earned within the $20,000–$29,999 income group. 
 
-Table 4 presents the calculations of median and mean (average) earned income groups in Australia from 2009 to 2021. The trends are illustrated in the line graph in Figure 4. The median and average income follow the same slight positive trend, increasing overall by one income group ($10,000) since 2009. The median typically sits below the average by one income group. In 2021, the median was “$40,000 – $49,999”, while the average was “$50,000 – $59,999”.
+Table 4 presents the calculations of median and mean (average) earned income groups in Australia from 2009 to 2021. The trends are illustrated in the line graph in Figure 4. The median and average income follow the same slight positive trend, increasing overall by one income group ($10,000) since 2009. The median typically sits below the average by one income group. In 2021, the median was $40,000–$49,999, while the average was $50,000–$59,999.
 
-Based on the analysis, most debtors earn below the average income, while the number of debtors earning above the average diminishes as the income group increases. Except for the “$130,000 or more” income group as this group does not observe the $10,000 increment rule.
+Based on the analysis, most debtors earn below the average income, while the number of debtors earning above the average diminishes as the income group increases. Note that the “$130,000 or more” income group is an exception as this group does not observe the $10,000 increment rule.
 
-This analysis is limited as the data fails to account for the size of HELP debt incurred and how far along each debtor is in their career. Higher debt may indicate higher education or further progressed careers may positively impact income earned.
+This analysis is limited as the data fails to account for the size of HELP debt incurred and how far along each debtor is in their career. Higher debt may indicate higher education and further progressed careers may both positively impact income earned.
 
 ### Chenxi's Part
 
