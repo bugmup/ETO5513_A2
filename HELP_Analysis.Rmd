@@ -1,22 +1,28 @@
 ---
-title: Analysis of Australia's Higher Education Loan Program
-  (HELP) Statistics
+title: "Analysis of Australia's Higher Education Loan Program (HELP) Statistics"
 author: "Alana Dabelstein, Anh-Thu Hoang, Chenxi Zhang"
 date: "01/06/2023"
-output: 
-  html_document:
-    toc: true
-    toc_float: true
+output:
+  bookdown::html_document2:
+    toc: yes
+    toc_float: yes
     theme: paper
-    fig_width: 7
-    fig_height: 4
+    fig_width: 9
+    fig_height: 5
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
 # Loading Libraries
+library(bookdown)
 library(readxl)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(scales)
+library(tidyverse)
+library(knitr)
 
 # Loading Data
 table_1 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 2, skip = 2, col_names = TRUE)
@@ -26,18 +32,213 @@ table_4 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 5, skip = 2,
 table_7 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 8, skip = 2, col_names = TRUE)
 ```
 
-## Introduction
+# Introduction
 
-## Analysis
+# Analysis
 
-### Alana's Part
+## Alana's Part
 
-### Anh-Thu's Part
+## Income and Outstanding Debt
 
-### Chenxi's Part
+<b> What was the distribution of taxable (HELP repayment) income of HELP debtors in Australian States and Territories in the 2021-22 financial year? </b>
 
-## Conclusion
+```{r distribution, echo=FALSE, message=FALSE, warning=FALSE}
 
-## References
+# Select columns and filter data
+income_dist <- table_7 %>%
+  select('Financial year', 'HELP repayment income', 'ACT', 'NSW', 'NT', 'QLD', 'SA', 'TAS', 'VIC', 'WA') %>%
+  filter(`Financial year` == "2021–22") %>%
+  filter(`HELP repayment income` != "Unknown")
 
-## Appendix
+# Pivot data
+pivoted_dist <- income_dist %>%
+  pivot_longer(
+    cols = c('ACT', 'NSW', 'NT', 'QLD', 'SA', 'TAS', 'VIC', 'WA'),
+    names_to = "State",
+    values_to = "Count")
+
+# Create factor to assign order to char type column
+income_factor = c("Up to $9,999", 
+                  "$10,000 to $19,999", 
+                  "$20,000 to $29,999", 
+                  "$30,000 to $39,999", 
+                  "$40,000 to $49,999", 
+                  "$50,000 to $59,999", 
+                  "$60,000 to $69,999", 
+                  "$70,000 to $79,999", 
+                  "$80,000 to $89,999", 
+                  "$90,000 to $99,999",
+                  "$100,000 or more",
+                  "$100,000 to $109,999", 
+                  "$110,000 to $119,999", 
+                  "$120,000 to $129,999", 
+                  "$130,000 or more")
+
+
+# Create plot
+dist_plot <- ggplot(data = pivoted_dist, aes(x = factor(`HELP repayment income`, level = income_factor), y = Count, fill = State)) +
+  geom_bar(stat = "identity") +
+  theme(panel.grid.major = element_line(color = "grey",
+                                        size = 0.5,
+                                        linetype = 3),
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  scale_y_continuous(name = "Count of Debtors", labels = label_comma(), 
+                     breaks = seq(0, 350000, by = 50000)) +
+  xlab("Income Group") +
+  labs(title = "The highest number of HELP debtors earn between $20,000 and $29,999", 
+       subtitle = "There is a postive skew in the distribution of HELP debtor income", 
+       caption = "Data source: Data.gov.au")
+
+```
+
+```{r disttab, echo=FALSE, message=FALSE, warning=FALSE}
+
+# Display table
+kable(income_dist, 
+      col.names = c("Financial Year","HELP Repayment Income", "ACT", "NSW", "NT", "QLD", "SA", "TAS", "VIC", "WA"), 
+      caption = "Table of count of outstanding HELP debtors in each income group by State or Territory in 2021-22")
+
+```
+
+```{r distfig, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center', fig.cap="Distribution of HELP debtor income in Australian States and Territories"}
+
+# Display plot
+dist_plot
+
+```
+
+Table \@ref(tab:disttab) presents the counts of students with outstanding HELP debt in each income group, incremented by $10,000, in all States and Territories in the 2021-22 fiscal year. The distribution of debtors is depicted in Figure \@ref(fig:distfig). Across all income groups, NSW, QLD, and VIC have the highest number of debtors. There are 336,992 outstanding HELP debtors earning between $20,000 and $29,999, the highest of all income groups. The number of debtors diminishes gradually as the income group increases. The income group with the lowest number of outstanding debtors is $120,000 to $129,999, with 19,642 debtors. It is to be noted that the “$130,000 or more” income group is an exception as it does not observe the $10,000 increment rule.
+
+<b> What trend can be observed of the median and mean taxable (HELP repayment) income of HELP debtors in Australia over time? </b>
+
+```{r median, echo=FALSE, message=FALSE, warning=FALSE}
+
+# Select columns and filter data
+median_income <- table_7 %>%
+  select('Financial year', 'HELP repayment income', 'ACT', 'NSW', 'NT', 'QLD', 'SA', 'TAS', 'VIC', 'WA') %>%
+  filter(`HELP repayment income` != "Unknown")
+
+# Pivot data
+median_pivot <- median_income %>%
+  pivot_longer(
+    cols = c('ACT', 'NSW', 'NT', 'QLD', 'SA', 'TAS', 'VIC', 'WA'),
+    names_to = "State",
+    values_to = "Count")
+
+# Change income column from char type to numerical
+median_pivot <- mutate(median_pivot, `HELP repayment income` = case_when(
+    `HELP repayment income` == "Up to $9,999" ~ 9999,
+    `HELP repayment income` == "$10,000 to $19,999" ~ 19999, 
+    `HELP repayment income` == "$20,000 to $29,999" ~ 29999, 
+    `HELP repayment income` == "$30,000 to $39,999" ~ 39999, 
+    `HELP repayment income` == "$40,000 to $49,999" ~ 49999, 
+    `HELP repayment income` == "$50,000 to $59,999" ~ 59999, 
+    `HELP repayment income` == "$60,000 to $69,999" ~ 69999, 
+    `HELP repayment income` == "$70,000 to $79,999" ~ 79999, 
+    `HELP repayment income` == "$80,000 to $89,999" ~ 89999, 
+    `HELP repayment income` == "$90,000 to $99,999" ~ 99999, 
+    `HELP repayment income` == "$100,000 or more" ~ 100000,
+    `HELP repayment income` == "$100,000 to $109,999" ~ 109999,
+    `HELP repayment income` == "$110,000 to $119,999" ~ 119999, 
+    `HELP repayment income` == "$120,000 to $129,999" ~ 129999, 
+    `HELP repayment income` == "$130,000 or more" ~ 130000,
+    is.na(`HELP repayment income`) ~ 0
+    ))
+
+# Create new variables
+median_pivoted <- median_pivot %>%
+  group_by(`Financial year`) %>%
+  summarise(
+    `Count of Debtors` = sum(Count),
+    `Median Income` = sort(rep(`HELP repayment income`,Count))[length(rep(`HELP repayment income`,Count))/2],
+    `Mean Income` = sum(sort(rep(`HELP repayment income`,Count)))/length(sort(rep(`HELP repayment income`,Count)))
+  )
+
+# Change median income column back to char type
+median_pivoted <- mutate(median_pivoted, `Median Income` = case_when(
+    `Median Income` == 9999 ~ "Up to $9,999",
+    `Median Income` == 19999 ~ "$10,000 to $19,999", 
+    `Median Income` == 29999 ~ "$20,000 to $29,999", 
+    `Median Income` == 39999 ~ "$30,000 to $39,999", 
+    `Median Income` == 49999 ~ "$40,000 to $49,999", 
+    `Median Income` == 59999 ~ "$50,000 to $59,999", 
+    `Median Income` == 69999 ~ "$60,000 to $69,999", 
+    `Median Income` == 79999 ~ "$70,000 to $79,999", 
+    `Median Income` == 89999 ~ "$80,000 to $89,999", 
+    `Median Income` == 99999 ~ "$90,000 to $99,999",
+    `Median Income` == 100000 ~ "$100,000 or more",
+    `Median Income` == 109999 ~ "$100,000 to $109,999", 
+    `Median Income` == 119999 ~ "$110,000 to $119,999", 
+    `Median Income` == 129999 ~ "$120,000 to $129,999", 
+    `Median Income` == 130000 ~ "$130,000 or more"
+    ))
+
+# Change mean income column back to char type
+median_pivoted2 <- mutate(median_pivoted, `Mean Income` = case_when(
+    `Mean Income` <= 9999 ~ "Up to $9,999",
+    `Mean Income` <= 19999 ~ "$10,000 to $19,999", 
+    `Mean Income` <= 29999 ~ "$20,000 to $29,999", 
+    `Mean Income` <= 39999 ~ "$30,000 to $39,999", 
+    `Mean Income` <= 49999 ~ "$40,000 to $49,999", 
+    `Mean Income` <= 59999 ~ "$50,000 to $59,999", 
+    `Mean Income` <= 69999 ~ "$60,000 to $69,999", 
+    `Mean Income` <= 79999 ~ "$70,000 to $79,999", 
+    `Mean Income` <= 89999 ~ "$80,000 to $89,999", 
+    `Mean Income` <= 99999 ~ "$90,000 to $99,999",
+    `Mean Income` == 100000 ~ "$100,000 or more",
+    `Mean Income` <= 109999 ~ "$100,000 to $109,999", 
+    `Mean Income` <= 119999 ~ "$110,000 to $119,999", 
+    `Mean Income` <= 129999 ~ "$120,000 to $129,999", 
+    `Mean Income` <= 130000 ~ "$130,000 or more"
+    ))
+
+# Create plot
+median_plot <- ggplot(median_pivoted2, aes(x = `Financial year`)) +
+  geom_line(aes(y = `Median Income`, group = 1, color = "Median")) +
+  geom_point(aes(y = `Median Income`, group = 1, color = "Median")) +
+  geom_line(aes(y = `Mean Income`, group = 1, color = "Mean")) +
+  geom_point(aes(y = `Mean Income`, group = 1, color = "Mean")) +
+  scale_color_manual(values = c(Median = "steelblue", Mean = "darkred"), 
+                     labels = c(Median = "Median income", Mean = "Mean income")) +
+  labs(title = "The median and mean income group of HELP debtors in 2021 was \n$40,000 to $49,999 and $50,000 to $59,999 respectively", 
+       subtitle = "There has been a positive increase in median and mean taxable income over time", 
+       caption = "Data source: Data.gov.au") +
+  ylab("Income Group") +
+  xlab("Year") +
+  guides(col = guide_legend("Legend")) +
+  theme(panel.grid.major = element_line(color = "grey",
+                                        size = 0.5,
+                                        linetype = 3),
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+```
+
+```{r mediantab, echo=FALSE, message=FALSE, warning=FALSE}
+
+# Display the table
+kable(median_pivoted2, 
+      col.names = c("Financial Year", "Count of Outstanding Debtors", "Median Income", "Mean Income"), 
+      caption = "Table of the median and mean taxable income group of outstanding HELP debtors in Australia from 2009-10 to 2021-22")
+
+```
+
+```{r medianfig, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center', fig.cap="Median and mean income of HELP debtors in Australia from 2009 to 2021"}
+
+# Display the plot
+median_plot
+
+```
+
+Table \@ref(tab:mediantab) presents the median and mean (average) income of HELP debtors in Australia from 2009 to 2021 and the trends are illustrated in Figure \@ref(fig:medianfig). The median and average income follow the same positive trend, increasing overall by one income group ($10,000) since 2009. The median typically sits below the average by one income group. In 2009, the median income group was $30,000 to $39,999 and the mean income group was $40,000 to $49,999. By 2021, the median had increased to $40,000 to $49,999 and the average to $50,000 to $59,999. The lowest median and mean income group of HELP debtors were observed in the 2010-11 to 2012-13 and 2015-16 fiscal years, at $20,000 to $29,999 and $30,000 to $39,999 respectively.
+
+Based on the analysis, most debtors earn below the average income, while the number of debtors earning above the average diminishes as the income group increases. The skewed distribution represents an increase in the government’s risk of not recovering HELP debt as many debtors don’t meet the minimum repayment threshold.
+
+This analysis is limited by the data not accounting for the size of HELP debt incurred and how progressed the debtor is in their career. Higher debt may indicate higher education and further progressed careers may both increase the income earned, while new graduates may be in a lower income group.
+
+## Chenxi's Part
+
+# Conclusion
+
+# References
+
+# Appendix
