@@ -9,14 +9,13 @@ output:
     theme: paper
     fig_width: 9
     fig_height: 5
-  pdf_document:
-    toc: yes
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
 # Loading Libraries
+library(bookdown)
 library(readxl)
 library(dplyr)
 library(tidyr)
@@ -24,7 +23,6 @@ library(ggplot2)
 library(scales)
 library(tidyverse)
 library(knitr)
-library(bookdown)
 
 # Loading Data
 table_1 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 2, skip = 2, col_names = TRUE)
@@ -44,7 +42,7 @@ table_7 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 8, skip = 2,
 
 <b> What was the distribution of taxable (HELP repayment) income of HELP debtors in Australian States and Territories in the 2021-22 financial year? </b>
 
-```{r Income Distribution, echo=FALSE, message=FALSE, warning=FALSE}
+```{r distribution, echo=FALSE, message=FALSE, warning=FALSE}
 
 # Select columns and filter data
 income_dist <- table_7 %>%
@@ -60,17 +58,31 @@ pivoted_dist <- income_dist %>%
     values_to = "Count")
 
 # Create factor to assign order to char type column
-income_factor = c("Up to $9,999", "$10,000 to $19,999", "$20,000 to $29,999", "$30,000 to $39,999", "$40,000 to $49,999", "$50,000 to $59,999", "$60,000 to $69,999", "$70,000 to $79,999", "$80,000 to $89,999", "$90,000 to $99,999", "$100,000 to $109,999", "$110,000 to $119,999", "$120,000 to $129,999", "$130,000 or more")
+income_factor = c("Up to $9,999", 
+                  "$10,000 to $19,999", 
+                  "$20,000 to $29,999", 
+                  "$30,000 to $39,999", 
+                  "$40,000 to $49,999", 
+                  "$50,000 to $59,999", 
+                  "$60,000 to $69,999", 
+                  "$70,000 to $79,999", 
+                  "$80,000 to $89,999", 
+                  "$90,000 to $99,999",
+                  "$100,000 or more",
+                  "$100,000 to $109,999", 
+                  "$110,000 to $119,999", 
+                  "$120,000 to $129,999", 
+                  "$130,000 or more")
 
 
 # Create plot
 dist_plot <- ggplot(data = pivoted_dist, aes(x = factor(`HELP repayment income`, level = income_factor), y = Count, fill = State)) +
-  geom_bar(stat="identity") +
+  geom_bar(stat = "identity") +
   theme(panel.grid.major = element_line(color = "grey",
                                         size = 0.5,
                                         linetype = 3),
         axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
-  scale_y_continuous(name="Count of Debtors", labels = label_comma(), 
+  scale_y_continuous(name = "Count of Debtors", labels = label_comma(), 
                      breaks = seq(0, 350000, by = 50000)) +
   xlab("Income Group") +
   labs(title = "The highest number of HELP debtors earn between $20,000 and $29,999", 
@@ -99,7 +111,7 @@ Table \@ref(tab:disttab) presents the counts of students with outstanding HELP d
 
 <b> What trend can be observed of the median and mean taxable (HELP repayment) income of HELP debtors in Australia over time? </b>
 
-```{r Median Income, echo=FALSE, message=FALSE, warning=FALSE}
+```{r median, echo=FALSE, message=FALSE, warning=FALSE}
 
 # Select columns and filter data
 median_income <- table_7 %>%
@@ -115,21 +127,21 @@ median_pivot <- median_income %>%
 
 # Change income column from char type to numerical
 median_pivot <- mutate(median_pivot, `HELP repayment income` = case_when(
-    `HELP repayment income`=="Up to $9,999" ~ 9999,
-    `HELP repayment income`=="$10,000 to $19,999" ~ 19999, 
-    `HELP repayment income`=="$20,000 to $29,999" ~ 29999, 
-    `HELP repayment income`=="$30,000 to $39,999" ~ 39999, 
-    `HELP repayment income`=="$40,000 to $49,999" ~ 49999, 
-    `HELP repayment income`=="$50,000 to $59,999" ~ 59999, 
-    `HELP repayment income`=="$60,000 to $69,999" ~ 69999, 
-    `HELP repayment income`=="$70,000 to $79,999" ~ 79999, 
-    `HELP repayment income`=="$80,000 to $89,999" ~ 89999, 
-    `HELP repayment income`=="$90,000 to $99,999" ~ 99999, 
-    `HELP repayment income`=="$100,000 or more" ~ 100000,
-    `HELP repayment income`=="$100,000 to $109,999" ~ 109999,
-    `HELP repayment income`=="$110,000 to $119,999" ~ 119999, 
-    `HELP repayment income`=="$120,000 to $129,999" ~ 129999, 
-    `HELP repayment income`=="$130,000 or more" ~ 130000,
+    `HELP repayment income` == "Up to $9,999" ~ 9999,
+    `HELP repayment income` == "$10,000 to $19,999" ~ 19999, 
+    `HELP repayment income` == "$20,000 to $29,999" ~ 29999, 
+    `HELP repayment income` == "$30,000 to $39,999" ~ 39999, 
+    `HELP repayment income` == "$40,000 to $49,999" ~ 49999, 
+    `HELP repayment income` == "$50,000 to $59,999" ~ 59999, 
+    `HELP repayment income` == "$60,000 to $69,999" ~ 69999, 
+    `HELP repayment income` == "$70,000 to $79,999" ~ 79999, 
+    `HELP repayment income` == "$80,000 to $89,999" ~ 89999, 
+    `HELP repayment income` == "$90,000 to $99,999" ~ 99999, 
+    `HELP repayment income` == "$100,000 or more" ~ 100000,
+    `HELP repayment income` == "$100,000 to $109,999" ~ 109999,
+    `HELP repayment income` == "$110,000 to $119,999" ~ 119999, 
+    `HELP repayment income` == "$120,000 to $129,999" ~ 129999, 
+    `HELP repayment income` == "$130,000 or more" ~ 130000,
     is.na(`HELP repayment income`) ~ 0
     ))
 
@@ -144,44 +156,44 @@ median_pivoted <- median_pivot %>%
 
 # Change median income column back to char type
 median_pivoted <- mutate(median_pivoted, `Median Income` = case_when(
-    `Median Income`==9999 ~ "Up to $9,999",
-    `Median Income`==19999 ~ "$10,000 to $19,999", 
-    `Median Income`==29999 ~ "$20,000 to $29,999", 
-    `Median Income`==39999 ~ "$30,000 to $39,999", 
-    `Median Income`==49999 ~ "$40,000 to $49,999", 
-    `Median Income`==59999 ~ "$50,000 to $59,999", 
-    `Median Income`==69999 ~ "$60,000 to $69,999", 
-    `Median Income`==79999 ~ "$70,000 to $79,999", 
-    `Median Income`==89999 ~ "$80,000 to $89,999", 
-    `Median Income`==99999 ~ "$90,000 to $99,999",
-    `Median Income`==100000 ~ "$100,000 or more",
-    `Median Income`==109999 ~ "$100,000 to $109,999", 
-    `Median Income`==119999 ~ "$110,000 to $119,999", 
-    `Median Income`==129999 ~ "$120,000 to $129,999", 
-    `Median Income`==130000 ~ "$130,000 or more"
+    `Median Income` == 9999 ~ "Up to $9,999",
+    `Median Income` == 19999 ~ "$10,000 to $19,999", 
+    `Median Income` == 29999 ~ "$20,000 to $29,999", 
+    `Median Income` == 39999 ~ "$30,000 to $39,999", 
+    `Median Income` == 49999 ~ "$40,000 to $49,999", 
+    `Median Income` == 59999 ~ "$50,000 to $59,999", 
+    `Median Income` == 69999 ~ "$60,000 to $69,999", 
+    `Median Income` == 79999 ~ "$70,000 to $79,999", 
+    `Median Income` == 89999 ~ "$80,000 to $89,999", 
+    `Median Income` == 99999 ~ "$90,000 to $99,999",
+    `Median Income` == 100000 ~ "$100,000 or more",
+    `Median Income` == 109999 ~ "$100,000 to $109,999", 
+    `Median Income` == 119999 ~ "$110,000 to $119,999", 
+    `Median Income` == 129999 ~ "$120,000 to $129,999", 
+    `Median Income` == 130000 ~ "$130,000 or more"
     ))
 
 # Change mean income column back to char type
 median_pivoted2 <- mutate(median_pivoted, `Mean Income` = case_when(
-    `Mean Income`<=9999 ~ "Up to $9,999",
-    `Mean Income`<=19999 ~ "$10,000 to $19,999", 
-    `Mean Income`<=29999 ~ "$20,000 to $29,999", 
-    `Mean Income`<=39999 ~ "$30,000 to $39,999", 
-    `Mean Income`<=49999 ~ "$40,000 to $49,999", 
-    `Mean Income`<=59999 ~ "$50,000 to $59,999", 
-    `Mean Income`<=69999 ~ "$60,000 to $69,999", 
-    `Mean Income`<=79999 ~ "$70,000 to $79,999", 
-    `Mean Income`<=89999 ~ "$80,000 to $89,999", 
-    `Mean Income`<=99999 ~ "$90,000 to $99,999",
-    `Mean Income`==100000 ~ "$100,000 or more",
-    `Mean Income`<=109999 ~ "$100,000 to $109,999", 
-    `Mean Income`<=119999 ~ "$110,000 to $119,999", 
-    `Mean Income`<=129999 ~ "$120,000 to $129,999", 
-    `Mean Income`<=130000 ~ "$130,000 or more"
+    `Mean Income` <= 9999 ~ "Up to $9,999",
+    `Mean Income` <= 19999 ~ "$10,000 to $19,999", 
+    `Mean Income` <= 29999 ~ "$20,000 to $29,999", 
+    `Mean Income` <= 39999 ~ "$30,000 to $39,999", 
+    `Mean Income` <= 49999 ~ "$40,000 to $49,999", 
+    `Mean Income` <= 59999 ~ "$50,000 to $59,999", 
+    `Mean Income` <= 69999 ~ "$60,000 to $69,999", 
+    `Mean Income` <= 79999 ~ "$70,000 to $79,999", 
+    `Mean Income` <= 89999 ~ "$80,000 to $89,999", 
+    `Mean Income` <= 99999 ~ "$90,000 to $99,999",
+    `Mean Income` == 100000 ~ "$100,000 or more",
+    `Mean Income` <= 109999 ~ "$100,000 to $109,999", 
+    `Mean Income` <= 119999 ~ "$110,000 to $119,999", 
+    `Mean Income` <= 129999 ~ "$120,000 to $129,999", 
+    `Mean Income` <= 130000 ~ "$130,000 or more"
     ))
 
 # Create plot
-median_plot <- ggplot(median_pivoted2, aes(x=`Financial year`)) + 
+median_plot <- ggplot(median_pivoted2, aes(x = `Financial year`)) +
   geom_line(aes(y = `Median Income`, group = 1, color = "Median")) +
   geom_point(aes(y = `Median Income`, group = 1, color = "Median")) +
   geom_line(aes(y = `Mean Income`, group = 1, color = "Mean")) +
@@ -189,11 +201,11 @@ median_plot <- ggplot(median_pivoted2, aes(x=`Financial year`)) +
   scale_color_manual(values = c(Median = "steelblue", Mean = "darkred"), 
                      labels = c(Median = "Median income", Mean = "Mean income")) +
   labs(title = "The median and mean income group of HELP debtors in 2021 was \n$40,000 to $49,999 and $50,000 to $59,999 respectively", 
-       subtitle = "There has been a positive increase in median taxable income over time", 
+       subtitle = "There has been a positive increase in median and mean taxable income over time", 
        caption = "Data source: Data.gov.au") +
   ylab("Income Group") +
   xlab("Year") +
-  guides(col=guide_legend("Legend")) +
+  guides(col = guide_legend("Legend")) +
   theme(panel.grid.major = element_line(color = "grey",
                                         size = 0.5,
                                         linetype = 3),
