@@ -9,6 +9,8 @@ output:
     theme: paper
     fig_width: 9
     fig_height: 5
+bibliography: references.bib
+csl: apa.csl
 ---
 
 ```{r setup, include=FALSE}
@@ -33,6 +35,8 @@ table_7 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 8, skip = 2,
 ```
 
 # Introduction
+
+Testing reference [@BaumSandy2016SLPa]
 
 # Analysis
 
@@ -241,5 +245,7 @@ Based on the analysis in \@ref(income), most debtors earn below the average inco
 This analysis is limited by the data not accounting for the size of HELP debt incurred and how progressed the debtor is in their career. Higher debt may indicate higher education and further progressed careers may both increase the income earned, while new graduates may be in a lower income group.
 
 # References
+
+<div id="refs"></div>
 
 # Appendix
