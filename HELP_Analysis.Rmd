@@ -242,9 +242,9 @@ Table \@ref(tab:mediantab) presents the median and mean (average) income of HELP
 
 # Conclusion
 
-Based on the analysis in \@ref(income), most debtors earn below the average income, while the number of debtors earning above the average diminishes as the income group increases. The skewed distribution represents an increase in the government’s risk of not recovering HELP debt as many debtors don’t meet the minimum repayment threshold.
+Based on the analysis in \@ref(income), most debtors earn below the average income, while the number of debtors earning above the average diminishes as the income group increases. The skewed distribution in Figure \@ref(fig:distfig) represents the government’s risk in recovering HELP debt in 2021. Up to $20,000 to $29,999, the risk increases as many debtors do not meet the minimum repayment threshold. However, beyond $30,000, as income increases, the government's risk decreases as more repayments are made through the tax system. The increase of median and mean income observed in Figure \@ref(fig:medianfig) indicate an overall inflation of debtor income since 2009, meaning an improved ability to repay the HELP debt. 
 
-This analysis is limited by the data not accounting for the size of HELP debt incurred and how progressed the debtor is in their career. Higher debt may indicate higher education and further progressed careers may both increase the income earned, while new graduates may be in a lower income group.
+However, this analysis is limited by the data not accounting for the size of HELP debt incurred and how progressed the debtor is in their career. Further progressed careers and larger debts which may indicate higher education further both may increase the level of income earned, while newer graduates may be in a lower income group.
 
 # References
 
