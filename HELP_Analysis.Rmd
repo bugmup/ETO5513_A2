@@ -1,5 +1,5 @@
 ---
-title: "Analysis of Australia's Higher Education Loan Program (HELP) Statistics"
+title: "Risk Analysis of Australia's Higher Education Loan Program (HELP)"
 author: "Alana Dabelstein, Anh-Thu Hoang, Chenxi Zhang"
 date: "01/06/2023"
 output:
