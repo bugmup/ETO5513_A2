@@ -240,6 +240,59 @@ Table \@ref(tab:mediantab) presents the median and mean (average) income of HELP
 
 ## Chenxi's Part
 
+## Recoverability of HELP Debt Over Time
+
+In order to investigate whether the Australian Government is able to recover debt issued under the HELP program, cumulative data available from FY07 to FY22 have been translated to annual increase for new debt incurred (including indexation) and repayments received (including compulsory repayments, voluntary repayments and bonus on voluntary repayments which ceased in FY17).
+
+<b> Annual Debt Incurred vs Repayments </b>
+
+``` {r DebtRepaymentTable, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center', fig.cap="TBC"}
+table_1 <- add_column(table_1,'Financial Year'=as.numeric(substr(table_1$Year,1,4))+1)
+table_1 <- arrange(table_1,desc(table_1[9]))
+table_1 <- add_column(table_1,'Annual Incurred (incl. Indexation)'=(table_1$`Total incurred debt ($)`+table_1$`Indexation ($)`)-lag(table_1$`Total incurred debt ($)`+table_1$`Indexation ($)`,order_by=table_1[2]))
+table_1 <- add_column(table_1,'Annual Repayment' = (table_1$`Compulsory repayments ($)`+ifelse(table_1$`OS Levy Compulsory repayments ($)`=="n/a",0,as.numeric(table_1$`OS Levy Compulsory repayments ($)`))+table_1$`Voluntary repayments ($)`+table_1$`Bonus on voluntary repayments ($)`)-lag(table_1$`Compulsory repayments ($)`++ifelse(table_1$`OS Levy Compulsory repayments ($)`=="n/a",0,as.numeric(table_1$`OS Levy Compulsory repayments ($)`))+table_1$`Voluntary repayments ($)`+table_1$`Bonus on voluntary repayments ($)`,order_by=table_1[2]))
+table_1 <- add_column(table_1, 'Annual Repayment Ratio'=table_1$`Annual Repayment`/table_1$`Annual Incurred (incl. Indexation)`)
+table_1 <- arrange(table_1,table_1$`Financial Year`)
+tableDebtRepayment <- table_1[-c(1),c(10:13)]
+kable(tableDebtRepayment,caption = "Annual New Debt Incurred and Repayments")
+
+```
+``` {r DebtRepaymentGraph, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center', fig.cap="Annual New Debt Incurred and Repayments"}
+graphDebtRepayment = ggplot(table_1)+
+  geom_line(aes(x=table_1$`Financial Year`, y=table_1$`Annual Incurred (incl. Indexation)`, color="New Debt Incurred"))+
+  geom_line(aes(x=table_1$`Financial Year`, y=table_1$`Annual Repayment`, color="Repayment"))+
+  geom_line(aes(x=table_1$`Financial Year`, y=table_1$`Annual Repayment Ratio`*8000000000, color="Repayment Ratio (RHS)"), size=3)+
+  scale_x_continuous(breaks=seq(2007,2022,1))+
+  scale_y_continuous("Annual New Debt and Payment ($)",sec.axis=sec_axis(~./8000000000,name="Annual Payment to New Debt Ratio (%)",labels = percent), labels = comma)+
+  xlab("Financial Year")+
+  labs(color="Legend", caption="Data source: Data.gov.au")+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+graphDebtRepayment
+```
+
+Table \@ref(fig:DebtRepaymentGraph) shows significant increase in new debts under the program each year, start at below \$3 billion in FY07 andincreasing to over \$10 billion per year in FY18 and FY22. Annual increase in repayments have occured at a slower rate, but follows an exponential trajectory to FY22. Repayment to new debt ratio have been calculated as primary indicator for recoverability of debt issued under the scheme. Between FY07 to FY16, this indicators shows a concerning trend as it decreased from 38% to 21% as new debt outpaced repayments. However this have recovered substantially in recent years (reaching >100% in FY20 which is an outlier due to low new debt in the year) which means that even as greater amounts are lent under this program year on year, it  still appears to be a sustainable one as annual repayments received have grown steadily over the past 6 years.
+
+<b> Debt Write Off Ratio </b>
+
+``` {r DebtRatioTable, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center', fig.cap="TBC"}
+table_1 <- add_column(table_1,'Annual Debt Writeoff' =table_1$`Value of debts writen off ($)`-lag(table_1$`Value of debts writen off ($)`,order_by=table_1[2]))
+table_1 <- add_column(table_1,'Debt Writeoff Ratio' =table_1$`Annual Debt Writeoff`/table_1$`Annual Incurred (incl. Indexation)`)
+tableDebtWriteoff <- table_1[-c(1),c(10,15)]
+kable(tableDebtWriteoff,caption = "Debt Writeoff as % of Annual New Debt")
+```
+
+``` {r DebtWriteoffGraph, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center', fig.cap="Debt Writeoff as % of Annual New Debt"}
+graphDebtWriteoff = ggplot(table_1)+
+  geom_line(aes(x=table_1$`Financial Year`, y=table_1$`Debt Writeoff Ratio`, color="Debt Writeoff %"))+
+  scale_x_continuous(breaks=seq(2007,2022,1))+
+  scale_y_continuous("Annual New Debt and Payment ($)", labels = percent)+
+  xlab("Financial Year")+
+  labs(color="Legend", caption="Data source: Data.gov.au")+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+graphDebtWriteoff
+```
+In table \@ref(fig:DebtWriteoffGraph) Annual debt writeoff as percentage of new debts is similar to the measure of loss rate measured for major banks. For the year 2019, average loss rate across the 3 major banks (ANZ, CBA, NAB) averages 0.15%. The calculated HELP debt writeoff % for FY is 0.46% [@pwc2019]. While substantially higher than the private banks, the HELP debt writeoff % is not unreasonable given the difference in nature compared to a commercial loan.
+
 # Conclusion
 
 Based on the analysis in \@ref(income), most debtors earn below the average income, while the number of debtors earning above the average diminishes as the income group increases. The skewed distribution represents an increase in the government’s risk of not recovering HELP debt as many debtors don’t meet the minimum repayment threshold.
