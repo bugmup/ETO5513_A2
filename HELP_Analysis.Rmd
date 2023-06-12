@@ -25,34 +25,52 @@ library(ggplot2)
 library(scales)
 library(tidyverse)
 library(knitr)
+library(gridExtra)
+library(eeptools)
 
 # Loading Data
 table_1 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 2, skip = 2, col_names = TRUE)
-table_2 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 3, skip = 2, col_names = TRUE)
-table_3 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 4, skip = 2, col_names = TRUE)
-table_4 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 5, skip = 2, col_names = TRUE)
+#table_2 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 3, skip = 2, col_names = TRUE)
+#table_3 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 4, skip = 2, col_names = TRUE)
+#table_4 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 5, skip = 2, col_names = TRUE)
 table_7 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 8, skip = 2, col_names = TRUE)
 ```
 
 # Introduction
 
-Educational attainment is associated with higher labour force participation, higher income, greater wealth, lower financial stress and healthier behaviours [@oecd_benefits_2018]. Despite this, many individuals have debt-averse attitudes which deter them from applying to university [@c_callender_g_mason_does_2017]. Fees for tertiary education have grown fast over time whereas there has been a flat growth in the wages of young adults aged 25-34 [@preston_gender_2023]. Enrolments and the number of people with outstanding HELP debts has steadily increased [@universities_australia_2022_2022]. 
+Educational attainment is associated with higher labour force participation, higher income, greater wealth, lower financial stress and healthier behaviours [@oecd_benefits_2018]. Despite this, many individuals have debt-averse attitudes which deter them from applying to university [@c_callender_g_mason_does_2017].
+
+Tertiary education cost has grown fast over time while there has been flat growth in the wages of young adults aged 25–34 [@preston_gender_2023]. The Higher Education Loan Program (HELP) is an income-contingent loan provided by the Australian Government to eligible students to cover this cost.
+
+The income-contingency reduces the risk of borrowing for students where the future value of education or training is uncertain, especially for students from low-income backgrounds [@albrecht1991deferred] as repayment is only required once their income reaches the minimum threshold through the income tax system. Enrolments and the number of people with outstanding HELP debts has steadily increased [@universities_australia_2022_2022]. 
+
+As of 2021-22, the minimum repayment threshold is $47,014. It is projected that HELP debt will total almost $200 billion in 2024–25 and almost one-third will be written off. [@anao2016]. For debtors who do not earn the minimum threshold, the risk of loan defaults increase and the burden of repayment falls on taxpayers and more successful borrowers [@BaumSandy2016SLPa].
+
+This report will attempt to analyse the risks of HELP on its long-term sustainability through answering the questions of:
+
+1.	<i>Alana’s</i>
+
+2.	<i>Alana’s</i>
+
+3.	<i>What was the distribution of taxable (HELP repayment) income of HELP debtors in Australian States and Territories in the 2021-22 financial year?</i>
+
+4.	<i>What trend can be observed of the median and mean taxable (HELP repayment) income of HELP debtors in Australia over time?</i>
+
+5.	<i>Chenxi’s</i>
+
+6.	<i>Chenxi’s</i>
+
 
 # Analysis
-
-The Higher Education Loan Program (HELP) is provided by the Australian Government to eligible students to cover the cost of tertiary education and training. The loan is income-contingent and students are required to repay their loan(s) once their income reaches the minimum threshold through the income tax system. The income-contingency reduces the risk of borrowing for education when the future value of the education or training is not apparent, especially for students from low-income backgrounds [@albrecht1991deferred].
-
-As of 2021-22, the minimum repayment threshold is $47,014. It is projected that HELP debt will total almost $200 billion in 2024–25 and almost one-third of this debt will not be collected. This raises the issue of sustainability of the program [@anao2016]. For debtors who do not earn the minimum threshold, the risk of loan defaults increase and the burden of repayment falls on taxpayers and more successful borrowers [@BaumSandy2016SLPa].
 
 ## Outstanding Debt and Debtors by Year, Age and Sex {#yearsection}
 
 ### How does total outstanding debt and number of debtors change from the financial years 2005-06 to 2021-22? {#yearsection}
 
 ```{r loading, include=FALSE, message=FALSE, warning=FALSE}
+
 table_8 <- read.csv("Data/HELP_DATA_TIDIED.csv")
 
-library(gridExtra)
-library(eeptools)
 ```
 
 ```{r table1, message=FALSE, warning=FALSE, echo=FALSE}
@@ -188,18 +206,7 @@ grid.arrange(plot5, plot6, nrow = 2)
 
 The age group with the greatest number of debtors is 20-29. Excluding the group for unknown age, 70+ has the lowest number of debtors. The same pattern can be observed for mean outstanding debt. Younger age groups have a higher risk of debt than older age groups with the exception of 0-19. An increase in the number of debtors and outstanding debt can be seen for all age groups.  From 2018-2021, there is a sudden drop in number of debtors for 0–19-year-olds, which also results in a drop in outstanding debt. 
 
-
-### Anh-Thu's Part
-
-# Analysis
-
-## Alana's Part
-
 ## Income and Outstanding Debt {#income}
-
-## References
-
-## Appendix
 
 <b> What was the distribution of taxable (HELP repayment) income of HELP debtors in Australian States and Territories in the 2021-22 financial year? </b>
 
@@ -392,9 +399,6 @@ median_plot
 
 Table \@ref(tab:mediantab) presents the median and mean (average) income of HELP debtors in Australia from 2009 to 2021 and the trends are illustrated in Figure \@ref(fig:medianfig). The median and average income follow the same positive trend, increasing overall by one income group ($10,000) since 2009. The median typically sits below the average by one income group. In 2009, the median income group was $30,000 to $39,999 and the mean income group was $40,000 to $49,999. By 2021, the median had increased to $40,000 to $49,999 and the average to $50,000 to $59,999. The lowest median and mean income group of HELP debtors were observed in the 2010-11 to 2012-13 and 2015-16 fiscal years, at $20,000 to $29,999 and $30,000 to $39,999 respectively.
 
-
-## Chenxi's Part
-
 ## Recoverability of HELP Debt Over Time
 
 In order to investigate whether the Australian Government is able to recover debt issued under the HELP program, cumulative data available from FY07 to FY22 have been translated to annual increase for new debt incurred (including indexation) and repayments received (including compulsory repayments, voluntary repayments and bonus on voluntary repayments which ceased in FY17).
@@ -420,12 +424,12 @@ graphDebtRepayment = ggplot(table_1)+
   scale_x_continuous(breaks=seq(2007,2022,1))+
   scale_y_continuous("Annual New Debt and Payment ($)",sec.axis=sec_axis(~./8000000000,name="Annual Payment to New Debt Ratio (%)",labels = percent), labels = comma)+
   xlab("Financial Year")+
-  labs(color="Legend", caption="Data source: Data.gov.au")+
+  labs(title="Annual Debt Incurred vs Repayment",subtitle="Increase in repayment ratio from 2016 indicating improved debt recoverability", color="Legend", caption="Data source: Data.gov.au")+
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 graphDebtRepayment
 ```
 
-Table \@ref(fig:DebtRepaymentGraph) shows significant increase in new debts under the program each year, start at below \$3 billion in FY07 and increasing to over \$10 billion per year in FY18 and FY22. Annual increase in repayments have occurred at a slower rate, but follows an exponential trajectory to FY22. Repayment to new debt ratio have been calculated as primary indicator for recoverability of debt issued under the scheme. Between FY07 to FY16, this indicators shows a concerning trend as it decreased from 38% to 21% as new debt outpaced repayments. However this have recovered substantially in recent years (reaching >100% in FY20 which is an outlier due to low new debt in the year) which means that even as greater amounts are lent under this program year on year, it  still appears to be a sustainable one as annual repayments received have grown steadily over the past 6 years.
+Graph \@ref(fig:DebtRepaymentGraph) shows significant increase in new debts under the program each year, start at below \$3 billion in FY07 and increasing to over \$10 billion per year in FY18 and FY22. Annual increase in repayments have occurred at a slower rate, but follows an exponential trajectory to FY22. Repayment to new debt ratio have been calculated as primary indicator for recoverability of debt issued under the scheme. Between FY07 to FY16, this indicators shows a concerning trend as it decreased from 38% to 21% as new debt outpaced repayments. However this have recovered substantially in recent years (reaching >100% in FY20 which is an outlier due to low new debt in the year) which means that even as greater amounts are lent under this program year on year, it  still appears to be a sustainable one as annual repayments received have grown steadily over the past 6 years.
 
 <b> Debt Write Off Ratio </b>
 
@@ -439,10 +443,11 @@ kable(tableDebtWriteoff,caption = "Debt Writeoff as % of Annual New Debt")
 ``` {r DebtWriteoffGraph, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center', fig.cap="Debt Writeoff as % of Annual New Debt"}
 graphDebtWriteoff = ggplot(table_1)+
   geom_line(aes(x=table_1$`Financial Year`, y=table_1$`Debt Writeoff Ratio`, color="Debt Writeoff %"))+
+  geom_point(aes(x=table_1$`Financial Year`, y=table_1$`Debt Writeoff Ratio`, color="Debt Writeoff %"))+
   scale_x_continuous(breaks=seq(2007,2022,1))+
   scale_y_continuous("Annual New Debt and Payment ($)", labels = percent)+
   xlab("Financial Year")+
-  labs(color="Legend", caption="Data source: Data.gov.au")+
+  labs(title="Debt Writeoff %",subtitle="Higher debt write % in recent years compared to the early 2000s",color="Legend", caption="Data source: Data.gov.au")+
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 graphDebtWriteoff
 ```
@@ -450,7 +455,7 @@ In table \@ref(fig:DebtWriteoffGraph) Annual debt writeoff as percentage of new 
 
 # Conclusion
 
-Based on the analysis in \@ref(income), most debtors earn below the average income, while the number of debtors earning above the average diminishes as the income group increases. The skewed distribution in Figure \@ref(fig:distfig) represents the government’s risk in recovering HELP debt in 2021. Up to $20,000 to $29,999, the risk increases as many debtors do not meet the minimum repayment threshold. However, beyond $30,000, as income increases, the government's risk decreases as more repayments are made through the tax system. The increase of median and mean income observed in Figure \@ref(fig:medianfig) indicate an overall inflation of debtor income since 2009, meaning an improved ability to repay the HELP debt. 
+Based on the analysis in \@ref(income), most debtors earn below the average income, while the number of debtors earning above the average diminishes as the income group increases. The skewed distribution in Figure \@ref(fig:distfig) represents the government’s risk in recovering HELP debt in 2021. Up to $20,000 to $29,999, the risk increases as many debtors do not meet the minimum repayment threshold. However, beyond $30,000, as income increases, the government's risk decreases as more repayments are made through the tax system. The increase of median and mean income observed in Figure \@ref(fig:medianfig) indicate an overall inflation of debtor income since 2009, meaning an improved ability to repay the HELP debt. This observation is supported by Figure \@ref(fig:DebtRepaymentGraph) which shows significant increase in annual payments received from 2016 reflective of increased debtor income and being pushed into higher repayment brackets.
 
 The number of debtors and outstanding debt has steadily increased since 2005. From 2005 to 2021, there has been an increase of 1.82 million people in debt. During this same period, there has been an increase in outstanding debt of $62 billion \@ref(yearsection). Females are more likely to have HELP debt and there is an increasing gap between males and females in debt \@ref(sexsection). It appears with age, the risk of student debt decreases. All age groups increased in debtors and outstanding debt for 2005-2021, except for the age group 0-19, which saw a sudden drop in 2018-2021 \@ref(agesection). Overall, Student debt levels are rising, along with a rise in older people with outstanding debt, especially women [@preston_gender_2023]. 
 
