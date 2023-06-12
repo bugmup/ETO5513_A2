@@ -420,12 +420,12 @@ graphDebtRepayment = ggplot(table_1)+
   scale_x_continuous(breaks=seq(2007,2022,1))+
   scale_y_continuous("Annual New Debt and Payment ($)",sec.axis=sec_axis(~./8000000000,name="Annual Payment to New Debt Ratio (%)",labels = percent), labels = comma)+
   xlab("Financial Year")+
-  labs(color="Legend", caption="Data source: Data.gov.au")+
+  labs(title="Annual Debt Incurred vs Repayment",subtitle="Increase in repayment ratio from 2016 indicating improved debt recoverability", color="Legend", caption="Data source: Data.gov.au")+
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 graphDebtRepayment
 ```
 
-Table \@ref(fig:DebtRepaymentGraph) shows significant increase in new debts under the program each year, start at below \$3 billion in FY07 and increasing to over \$10 billion per year in FY18 and FY22. Annual increase in repayments have occurred at a slower rate, but follows an exponential trajectory to FY22. Repayment to new debt ratio have been calculated as primary indicator for recoverability of debt issued under the scheme. Between FY07 to FY16, this indicators shows a concerning trend as it decreased from 38% to 21% as new debt outpaced repayments. However this have recovered substantially in recent years (reaching >100% in FY20 which is an outlier due to low new debt in the year) which means that even as greater amounts are lent under this program year on year, it  still appears to be a sustainable one as annual repayments received have grown steadily over the past 6 years.
+Graph \@ref(fig:DebtRepaymentGraph) shows significant increase in new debts under the program each year, start at below \$3 billion in FY07 and increasing to over \$10 billion per year in FY18 and FY22. Annual increase in repayments have occurred at a slower rate, but follows an exponential trajectory to FY22. Repayment to new debt ratio have been calculated as primary indicator for recoverability of debt issued under the scheme. Between FY07 to FY16, this indicators shows a concerning trend as it decreased from 38% to 21% as new debt outpaced repayments. However this have recovered substantially in recent years (reaching >100% in FY20 which is an outlier due to low new debt in the year) which means that even as greater amounts are lent under this program year on year, it  still appears to be a sustainable one as annual repayments received have grown steadily over the past 6 years.
 
 <b> Debt Write Off Ratio </b>
 
@@ -439,10 +439,11 @@ kable(tableDebtWriteoff,caption = "Debt Writeoff as % of Annual New Debt")
 ``` {r DebtWriteoffGraph, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center', fig.cap="Debt Writeoff as % of Annual New Debt"}
 graphDebtWriteoff = ggplot(table_1)+
   geom_line(aes(x=table_1$`Financial Year`, y=table_1$`Debt Writeoff Ratio`, color="Debt Writeoff %"))+
+  geom_point(aes(x=table_1$`Financial Year`, y=table_1$`Debt Writeoff Ratio`, color="Debt Writeoff %"))+
   scale_x_continuous(breaks=seq(2007,2022,1))+
   scale_y_continuous("Annual New Debt and Payment ($)", labels = percent)+
   xlab("Financial Year")+
-  labs(color="Legend", caption="Data source: Data.gov.au")+
+  labs(title="Debt Writeoff %",subtitle="Higher debt write % in recent years compared to the early 2000s",color="Legend", caption="Data source: Data.gov.au")+
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 graphDebtWriteoff
 ```
@@ -450,7 +451,7 @@ In table \@ref(fig:DebtWriteoffGraph) Annual debt writeoff as percentage of new 
 
 # Conclusion
 
-Based on the analysis in \@ref(income), most debtors earn below the average income, while the number of debtors earning above the average diminishes as the income group increases. The skewed distribution in Figure \@ref(fig:distfig) represents the government’s risk in recovering HELP debt in 2021. Up to $20,000 to $29,999, the risk increases as many debtors do not meet the minimum repayment threshold. However, beyond $30,000, as income increases, the government's risk decreases as more repayments are made through the tax system. The increase of median and mean income observed in Figure \@ref(fig:medianfig) indicate an overall inflation of debtor income since 2009, meaning an improved ability to repay the HELP debt. 
+Based on the analysis in \@ref(income), most debtors earn below the average income, while the number of debtors earning above the average diminishes as the income group increases. The skewed distribution in Figure \@ref(fig:distfig) represents the government’s risk in recovering HELP debt in 2021. Up to $20,000 to $29,999, the risk increases as many debtors do not meet the minimum repayment threshold. However, beyond $30,000, as income increases, the government's risk decreases as more repayments are made through the tax system. The increase of median and mean income observed in Figure \@ref(fig:medianfig) indicate an overall inflation of debtor income since 2009, meaning an improved ability to repay the HELP debt. This observation is supported by Figure \@ref(fig:DebtRepaymentGraph) which shows significant increase in annual payments received from 2016 reflective of increased debtor income and being pushed into higher repayment brackets.
 
 The number of debtors and outstanding debt has steadily increased since 2005. From 2005 to 2021, there has been an increase of 1.82 million people in debt. During this same period, there has been an increase in outstanding debt of $62 billion \@ref(yearsection). Females are more likely to have HELP debt and there is an increasing gap between males and females in debt \@ref(sexsection). It appears with age, the risk of student debt decreases. All age groups increased in debtors and outstanding debt for 2005-2021, except for the age group 0-19, which saw a sudden drop in 2018-2021 \@ref(agesection). Overall, Student debt levels are rising, along with a rise in older people with outstanding debt, especially women [@preston_gender_2023]. 
 
