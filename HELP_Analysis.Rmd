@@ -28,11 +28,15 @@ table_7 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 8, skip = 2,
 
 ## Introduction
 
+Educational attainment is associated with higher labour force participation, higher income, greater wealth, lower financial stress and healthier behaviours (OECD, 2018). Despite this, individuals, many individuals have debt-averse attitudes which deter them from applying to university (Callender & Mason, 2017). Fees for tertiary education have grown fast over time whereas there has been a flat growth in the wages of young adults aged 25-34 (Preston, 2023). Enrolments and the number of people with outstanding HELP debts has steadily increased (Universities Australia, 2022). 
+
 ## Analysis
 
 ### Alana's Part
 
-## How does total outstanding debt and number of debtors change from the financial years 2005-06 to 2021-22? {#yearsection}
+## Outstanding Debt and Debtors by Year, Age and Sex {#yearsection}
+
+### How does total outstanding debt and number of debtors change from the financial years 2005-06 to 2021-22? {#yearsection}
 
 ```{r loading, include=FALSE, message=FALSE, warning=FALSE}
 table_8 <- read.csv("Data/HELP_DATA_TIDIED.csv")
@@ -62,7 +66,7 @@ totalOut_plot <- ggplot(data = table_8_year, aes(x = Year, y = `Total Outstandin
   geom_point(alpha = 0.8) + 
   xlab("Year") + 
   ylab("Total Oustanding Debt ($) in billions") + 
-  labs(title = "a) Outstanding Debt Has Rapidly Increased From 2005", subtitle = "Total Outstanding Debt From 2005-2021") +
+  labs(title = "a) Outstanding Debt Has Increased From 2005", subtitle = "Total Outstanding Debt From 2005-2021") +
   theme_minimal() +  
   geom_smooth()  + 
   scale_y_continuous(labels = scales::comma)
@@ -71,7 +75,7 @@ totalDebtors_plot <- ggplot(data = table_8_year, aes(x = Year, y = `Total Number
   geom_point(alpha = 0.8) + 
   xlab("Year") + 
   ylab("Total Debtors in millions") + 
-  labs(title = "b) Number of Debtors Has Rapidly Increased From 2005", subtitle = "Total Number of Debtors From 2005-2021") +
+  labs(title = "b) Number of Debtors Has Increased From 2005", subtitle = "Total Number of Debtors From 2005-2021") +
   theme_minimal() +  
   geom_smooth()  + 
   scale_y_continuous(labels = scales::comma)
@@ -80,10 +84,7 @@ totalDebtors_plot <- ggplot(data = table_8_year, aes(x = Year, y = `Total Number
 grid.arrange(totalOut_plot, totalDebtors_plot, nrow = 2)
 ```
 
-- Total number of debtors increased from 1.18 million in 2005 to 3 million in 2021. The same results can be observed for outstanding where the total was $12.39 billion in 2005 which rose to $74.39 billion in 2021. 
-- There was a rapid increase from 2010 to 2015, where total outstanding debt rose by $25.32 billion. 
-- A small decrease in debtors can be observed from 2018 to 2019 which may be a factor for the apparent plateau in outstanding debt from years 2018-2020. 
-
+The total number of debtors increased from 1.18 million in 2005 to 3 million in 2021.  The outstanding debt total was $12.39 billion in 2005 which rose to $74.39 billion in 2021. A rapid increase can be seen from 2010 to 2015, where total outstanding debt rose by $25.32 billion. Interestingly, a small decrease in debtors can be observed from 2018 to 2019 which may be a factor for the plateau in outstanding debt from years 2018-2020. 
 
 ### Average Debtors and Oustanding Debt by Sex {#sexsection}
 
@@ -129,8 +130,7 @@ grid.arrange(plot3, plot4, nrow = 2)
 
 ```
 
-- Grouping mean debtors and outstanding debt by sex shows that there are significantly more female debtors than males. From 2005-2021, on average, 158, 046.2 females are in debt, compared to 103,717.2 males. This difference in average of 54,329 could factor for the $750 million difference in average outstanding debt. 
-- A increasing gap can be observed between the number of debtors and outstanding debt between females and males. 
+Grouping mean debtors and outstanding debt by sex shows that there are significantly more female debtors than males. The reason is likely an increase in university enrolments, with female enrolments growing faster than male enrolments (Preston, 2023). From 2005-2021, on average, 158, 046.2 females are in debt, compared to 103,717.2 males. This difference in average of 54,329 female debtors could factor for the $750 million difference in average outstanding debt. An increasing gap can be observed between the number of debtors and outstanding debt between females and males. 
 
 ### Average Debtors and Oustanding Debt by Age Group {#agesection}
 
@@ -179,11 +179,7 @@ plot6 <- ggplot(data = table_8_age_year, aes(x = Year, y = mean_OustandingDebt, 
 grid.arrange(plot5, plot6, nrow = 2)
 ```
 
-- The age group with the greatest number of debtors is 20-29, followed by 30-39. Excluding the group for unknown age, 70+ has the lowest number of debtors. 
-- The same pattern can be observed for mean outstanding debt. The age group 20-29 on average have an outstanding debt of $11,589.59 million, compared to $79.4 million for 70+. 
-- Younger age groups have a higher risk of having debt than older age groups. The one exception is for the youngest age group 0-19. 
-- An increase in the number of debtors and outstanding debt over the period 2005-2021 can be seen for most age groups, with steeper inclines for 20-29, 30-39 and 40-49. 
-- From 2018-2021, there is a sudden drop in number of debtors for 0–19-year-olds, which also results in a drop in outstanding debt. 
+The age group with the greatest number of debtors is 20-29. Excluding the group for unknown age, 70+ has the lowest number of debtors. The same pattern can be observed for mean outstanding debt. Younger age groups have a higher risk of debt than older age groups with the exception of 0-19. An increase in the number of debtors and outstanding debt can be seen for all age groups.  From 2018-2021, there is a sudden drop in number of debtors for 0–19-year-olds, which also results in a drop in outstanding debt. 
 
 
 ### Anh-Thu's Part
@@ -192,8 +188,17 @@ grid.arrange(plot5, plot6, nrow = 2)
 
 ## Conclusion
 
-The number of debtors and outstanding debt has steadily increased since 2005 \@ref(yearsection). From 2005 to 2021, there has been an increase of 1.82 million people in debt. During this same period, there has been an increase in outstanding debt of $62 billion. On average, females are $750 million higher in outstanding debt than males \@ref(sexsection). Also, on average there are 54,329 more females in debt than males. There is an increase in the gap between males and females in debt, creating a higher financial risk for females. Additionally, the group with the highest risk of financial debt is 20-29, followed by 30-39, 40-49, 50-59, 60-69 and 70+, respectively \@ref(agesection). It appears with age, the risk of debt decreases. All age groups increased in debtors and outstanding debt for 2005-2021, except for the age group 0-19, which saw a sudden drop in 2018-2021. 
+The number of debtors and outstanding debt has steadily increased since 2005. From 2005 to 2021, there has been an increase of 1.82 million people in debt. During this same period, there has been an increase in outstanding debt of $62 billion \@ref(yearsection). Females are more likely to have HELP debt and there is an increasing gap between males and females in debt \@ref(sexsection). It appears with age, the risk of student debt decreases. All age groups increased in debtors and outstanding debt for 2005-2021, except for the age group 0-19, which saw a sudden drop in 2018-2021 \@ref(agesection). Overall, Student debt levels are rising, along with a rise in older people with outstanding debt, especially women  (Preston, 2023).  
 
 ## References
+
+Callender, C., & Mason, G. (2017). Does Student Loan Debt Deter Higher Education Participation? New Evidence from England. Sage Journals, 671(1).
+
+OECD. (2018). Benefits of educational attainment. Department of Education. Australian Government.
+
+Preston, A. (2023). Gender and Australia’s Higher Education Loan Program. The University of Western Australia, Department of Economics UWA Business School. Women in Social & Economic Research (WiSER).
+
+Universities Australia. (2022). 2022 Higher Education Facts and Figures. Universities Australia.
+
 
 ## Appendix
