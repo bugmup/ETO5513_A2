@@ -38,11 +38,28 @@ table_7 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 8, skip = 2,
 
 # Introduction
 
-The Higher Education Loan Program (HELP) is provided by the Australian Government to eligible students to cover the cost of tertiary education and training. The loan is income-contingent and students are required to repay their loan(s) once their income reaches the minimum threshold through the income tax system. The income-contingency reduces the risk of borrowing for education when the future value of the education or training is not apparent, especially for students from low-income backgrounds [@albrecht1991deferred].
+Educational attainment is associated with higher labour force participation, higher income, greater wealth, lower financial stress and healthier behaviours [@oecd_benefits_2018]. Despite this, many individuals have debt-averse attitudes which deter them from applying to university [@c_callender_g_mason_does_2017].
 
-Educational attainment is associated with higher labour force participation, higher income, greater wealth, lower financial stress and healthier behaviours [@oecd_benefits_2018]. Despite this, many individuals have debt-averse attitudes which deter them from applying to university [@c_callender_g_mason_does_2017]. Fees for tertiary education have grown fast over time whereas there has been a flat growth in the wages of young adults aged 25-34 [@preston_gender_2023]. Enrolments and the number of people with outstanding HELP debts has steadily increased [@universities_australia_2022_2022]. 
+Tertiary education cost has grown fast over time while there has been flat growth in the wages of young adults aged 25–34 [@preston_gender_2023]. The Higher Education Loan Program (HELP) is an income-contingent loan provided by the Australian Government to eligible students to cover this cost.
 
-As of 2021-22, the minimum repayment threshold is $47,014. It is projected that HELP debt will total almost $200 billion in 2024–25 and almost one-third of this debt will not be collected. This raises the issue of sustainability of the program [@anao2016]. For debtors who do not earn the minimum threshold, the risk of loan defaults increase and the burden of repayment falls on taxpayers and more successful borrowers [@BaumSandy2016SLPa].
+The income-contingency reduces the risk of borrowing for students where the future value of education or training is uncertain, especially for students from low-income backgrounds [@albrecht1991deferred] as repayment is only required once their income reaches the minimum threshold through the income tax system. Enrolments and the number of people with outstanding HELP debts has steadily increased [@universities_australia_2022_2022]. 
+
+As of 2021-22, the minimum repayment threshold is $47,014. It is projected that HELP debt will total almost $200 billion in 2024–25 and almost one-third will be written off. [@anao2016]. For debtors who do not earn the minimum threshold, the risk of loan defaults increase and the burden of repayment falls on taxpayers and more successful borrowers [@BaumSandy2016SLPa].
+
+This report will attempt to analyse the risks of HELP on its long-term sustainability through answering the questions of:
+
+1.	<i>Alana’s</i>
+
+2.	<i>Alana’s</i>
+
+3.	<i>What was the distribution of taxable (HELP repayment) income of HELP debtors in Australian States and Territories in the 2021-22 financial year?</i>
+
+4.	<i>What trend can be observed of the median and mean taxable (HELP repayment) income of HELP debtors in Australia over time?</i>
+
+5.	<i>Chenxi’s</i>
+
+6.	<i>Chenxi’s</i>
+
 
 # Analysis
 
