@@ -36,7 +36,7 @@ table_7 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 8, skip = 2,
 
 # Introduction
 
-Educational attainment is associated with higher labour force participation, higher income, greater wealth, lower financial stress and healthier behaviours (OECD, 2018). Despite this, individuals, many individuals have debt-averse attitudes which deter them from applying to university (Callender & Mason, 2017). Fees for tertiary education have grown fast over time whereas there has been a flat growth in the wages of young adults aged 25-34 (Preston, 2023). Enrolments and the number of people with outstanding HELP debts has steadily increased (Universities Australia, 2022). 
+Educational attainment is associated with higher labour force participation, higher income, greater wealth, lower financial stress and healthier behaviours [@oecd_benefits_2018]. Despite this, many individuals have debt-averse attitudes which deter them from applying to university [@c_callender_g_mason_does_2017]. Fees for tertiary education have grown fast over time whereas there has been a flat growth in the wages of young adults aged 25-34 [@preston_gender_2023]. Enrolments and the number of people with outstanding HELP debts has steadily increased [@universities_australia_2022_2022]. 
 
 # Analysis
 
@@ -137,7 +137,7 @@ grid.arrange(plot3, plot4, nrow = 2)
 
 ```
 
-Grouping mean debtors and outstanding debt by sex shows that there are significantly more female debtors than males. The reason is likely an increase in university enrolments, with female enrolments growing faster than male enrolments (Preston, 2023). From 2005-2021, on average, 158, 046.2 females are in debt, compared to 103,717.2 males. This difference in average of 54,329 female debtors could factor for the $750 million difference in average outstanding debt. An increasing gap can be observed between the number of debtors and outstanding debt between females and males. 
+Grouping mean debtors and outstanding debt by sex shows that there are significantly more female debtors than males. The reason is likely an increase in university enrolments, with female enrolments growing faster than male enrolments [@preston_gender_2023]. From 2005-2021, on average, 158, 046.2 females are in debt, compared to 103,717.2 males. This difference in average of 54,329 female debtors could factor for the $750 million difference in average outstanding debt. An increasing gap can be observed between the number of debtors and outstanding debt between females and males. 
 
 ### Average Debtors and Oustanding Debt by Age Group {#agesection}
 
@@ -452,7 +452,7 @@ In table \@ref(fig:DebtWriteoffGraph) Annual debt writeoff as percentage of new 
 
 Based on the analysis in \@ref(income), most debtors earn below the average income, while the number of debtors earning above the average diminishes as the income group increases. The skewed distribution in Figure \@ref(fig:distfig) represents the government’s risk in recovering HELP debt in 2021. Up to $20,000 to $29,999, the risk increases as many debtors do not meet the minimum repayment threshold. However, beyond $30,000, as income increases, the government's risk decreases as more repayments are made through the tax system. The increase of median and mean income observed in Figure \@ref(fig:medianfig) indicate an overall inflation of debtor income since 2009, meaning an improved ability to repay the HELP debt. 
 
-The number of debtors and outstanding debt has steadily increased since 2005. From 2005 to 2021, there has been an increase of 1.82 million people in debt. During this same period, there has been an increase in outstanding debt of $62 billion \@ref(yearsection). Females are more likely to have HELP debt and there is an increasing gap between males and females in debt \@ref(sexsection). It appears with age, the risk of student debt decreases. All age groups increased in debtors and outstanding debt for 2005-2021, except for the age group 0-19, which saw a sudden drop in 2018-2021 \@ref(agesection). Overall, Student debt levels are rising, along with a rise in older people with outstanding debt, especially women  (Preston, 2023). 
+The number of debtors and outstanding debt has steadily increased since 2005. From 2005 to 2021, there has been an increase of 1.82 million people in debt. During this same period, there has been an increase in outstanding debt of $62 billion \@ref(yearsection). Females are more likely to have HELP debt and there is an increasing gap between males and females in debt \@ref(sexsection). It appears with age, the risk of student debt decreases. All age groups increased in debtors and outstanding debt for 2005-2021, except for the age group 0-19, which saw a sudden drop in 2018-2021 \@ref(agesection). Overall, Student debt levels are rising, along with a rise in older people with outstanding debt, especially women [@preston_gender_2023]. 
 
 However, this analysis is limited by the data not accounting for the size of HELP debt incurred and how progressed the debtor is in their career. Further progressed careers and larger debts which may indicate higher education further both may increase the level of income earned, while newer graduates may be in a lower income group.
 
