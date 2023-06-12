@@ -30,9 +30,9 @@ library(eeptools)
 
 # Loading Data
 table_1 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 2, skip = 2, col_names = TRUE)
-table_2 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 3, skip = 2, col_names = TRUE)
-table_3 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 4, skip = 2, col_names = TRUE)
-table_4 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 5, skip = 2, col_names = TRUE)
+#table_2 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 3, skip = 2, col_names = TRUE)
+#table_3 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 4, skip = 2, col_names = TRUE)
+#table_4 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 5, skip = 2, col_names = TRUE)
 table_7 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 8, skip = 2, col_names = TRUE)
 ```
 
