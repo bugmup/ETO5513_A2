@@ -25,6 +25,8 @@ library(ggplot2)
 library(scales)
 library(tidyverse)
 library(knitr)
+library(gridExtra)
+library(eeptools)
 
 # Loading Data
 table_1 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 2, skip = 2, col_names = TRUE)
@@ -36,23 +38,22 @@ table_7 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 8, skip = 2,
 
 # Introduction
 
-Educational attainment is associated with higher labour force participation, higher income, greater wealth, lower financial stress and healthier behaviours [@oecd_benefits_2018]. Despite this, many individuals have debt-averse attitudes which deter them from applying to university [@c_callender_g_mason_does_2017]. Fees for tertiary education have grown fast over time whereas there has been a flat growth in the wages of young adults aged 25-34 [@preston_gender_2023]. Enrolments and the number of people with outstanding HELP debts has steadily increased [@universities_australia_2022_2022]. 
-
-# Analysis
-
 The Higher Education Loan Program (HELP) is provided by the Australian Government to eligible students to cover the cost of tertiary education and training. The loan is income-contingent and students are required to repay their loan(s) once their income reaches the minimum threshold through the income tax system. The income-contingency reduces the risk of borrowing for education when the future value of the education or training is not apparent, especially for students from low-income backgrounds [@albrecht1991deferred].
 
+Educational attainment is associated with higher labour force participation, higher income, greater wealth, lower financial stress and healthier behaviours [@oecd_benefits_2018]. Despite this, many individuals have debt-averse attitudes which deter them from applying to university [@c_callender_g_mason_does_2017]. Fees for tertiary education have grown fast over time whereas there has been a flat growth in the wages of young adults aged 25-34 [@preston_gender_2023]. Enrolments and the number of people with outstanding HELP debts has steadily increased [@universities_australia_2022_2022]. 
+
 As of 2021-22, the minimum repayment threshold is $47,014. It is projected that HELP debt will total almost $200 billion in 2024–25 and almost one-third of this debt will not be collected. This raises the issue of sustainability of the program [@anao2016]. For debtors who do not earn the minimum threshold, the risk of loan defaults increase and the burden of repayment falls on taxpayers and more successful borrowers [@BaumSandy2016SLPa].
+
+# Analysis
 
 ## Outstanding Debt and Debtors by Year, Age and Sex {#yearsection}
 
 ### How does total outstanding debt and number of debtors change from the financial years 2005-06 to 2021-22? {#yearsection}
 
 ```{r loading, include=FALSE, message=FALSE, warning=FALSE}
+
 table_8 <- read.csv("Data/HELP_DATA_TIDIED.csv")
 
-library(gridExtra)
-library(eeptools)
 ```
 
 ```{r table1, message=FALSE, warning=FALSE, echo=FALSE}
@@ -188,18 +189,7 @@ grid.arrange(plot5, plot6, nrow = 2)
 
 The age group with the greatest number of debtors is 20-29. Excluding the group for unknown age, 70+ has the lowest number of debtors. The same pattern can be observed for mean outstanding debt. Younger age groups have a higher risk of debt than older age groups with the exception of 0-19. An increase in the number of debtors and outstanding debt can be seen for all age groups.  From 2018-2021, there is a sudden drop in number of debtors for 0–19-year-olds, which also results in a drop in outstanding debt. 
 
-
-### Anh-Thu's Part
-
-# Analysis
-
-## Alana's Part
-
 ## Income and Outstanding Debt {#income}
-
-## References
-
-## Appendix
 
 <b> What was the distribution of taxable (HELP repayment) income of HELP debtors in Australian States and Territories in the 2021-22 financial year? </b>
 
@@ -391,9 +381,6 @@ median_plot
 ```
 
 Table \@ref(tab:mediantab) presents the median and mean (average) income of HELP debtors in Australia from 2009 to 2021 and the trends are illustrated in Figure \@ref(fig:medianfig). The median and average income follow the same positive trend, increasing overall by one income group ($10,000) since 2009. The median typically sits below the average by one income group. In 2009, the median income group was $30,000 to $39,999 and the mean income group was $40,000 to $49,999. By 2021, the median had increased to $40,000 to $49,999 and the average to $50,000 to $59,999. The lowest median and mean income group of HELP debtors were observed in the 2010-11 to 2012-13 and 2015-16 fiscal years, at $20,000 to $29,999 and $30,000 to $39,999 respectively.
-
-
-## Chenxi's Part
 
 ## Recoverability of HELP Debt Over Time
 
