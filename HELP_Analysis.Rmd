@@ -55,7 +55,7 @@ library(gridExtra)
 library(eeptools)
 ```
 
-```{r table1, message=FALSE, warning=FALSE, include=FALSE}
+```{r table1, message=FALSE, warning=FALSE, echo=FALSE}
 # Group By Year 
 table_8_year <- table_8 %>%
   group_by(Year) %>%
@@ -68,7 +68,7 @@ kable(table_8_year,
              digits = 2)
 ```
 
-```{r figure1, warning=FALSE, message=FALSE, include=FALSE, fig.align='center', fig.cap="Total outstanding debt and number of debtors from the financial years 2005-06 to 2021-22"}
+```{r figure1, warning=FALSE, message=FALSE, echo=FALSE, fig.align='center', fig.cap="Total outstanding debt and number of debtors from the financial years 2005-06 to 2021-22"}
 totalOut_plot <- ggplot(data = table_8_year, aes(x = Year, y = `Total Outstanding Debt (billions $)`)) + 
   geom_point(alpha = 0.8) + 
   xlab("Year") + 
@@ -95,7 +95,7 @@ The total number of debtors increased from 1.18 million in 2005 to 3 million in 
 
 ### Average Debtors and Oustanding Debt by Sex {#sexsection}
 
-```{r table2, include=FALSE, message=FALSE, warning=FALSE}
+```{r table2, echo=FALSE, message=FALSE, warning=FALSE}
 # Group By Year 
 table_8_sex <- table_8 %>%
   group_by(Sex) %>%
@@ -107,7 +107,7 @@ kable(table_8_sex,
              digits = 2)
 ```
 
-```{r figure2, include=FALSE, message=FALSE, warning=FALSE, fig.align='center'}
+```{r figure2, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center'}
 table_8_sex_year <- table_8 %>%
   group_by(Sex, Year) %>%
   summarise(mean_number_Debtors = mean(Num_Debtors), 
@@ -141,7 +141,7 @@ Grouping mean debtors and outstanding debt by sex shows that there are significa
 
 ### Average Debtors and Oustanding Debt by Age Group {#agesection}
 
-```{r table3, include=FALSE, message=FALSE, warning=FALSE}
+```{r table3, echo=FALSE, message=FALSE, warning=FALSE}
 # group by age 
 
 table_8_age <- table_8 %>%
@@ -154,7 +154,7 @@ kable(table_8_age,
              digits = 2)
 ```
 
-```{r figure3, include=FALSE, message=FALSE, warning=FALSE, fig.align='center'}
+```{r figure3, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center'}
 # group by age and year 
 
 table_8_age_year <- table_8 %>%
