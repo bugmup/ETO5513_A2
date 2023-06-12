@@ -1,22 +1,30 @@
 ---
-title: Analysis of Australia's Higher Education Loan Program
-  (HELP) Statistics
+title: "Risk Analysis of Australia's Higher Education Loan Program (HELP)"
 author: "Alana Dabelstein, Anh-Thu Hoang, Chenxi Zhang"
 date: "01/06/2023"
-output: 
-  html_document:
-    toc: true
-    toc_float: true
+output:
+  bookdown::html_document2:
+    toc: yes
+    toc_float: yes
     theme: paper
-    fig_width: 7
-    fig_height: 4
+    fig_width: 9
+    fig_height: 5
+bibliography: references.bib
+csl: apa.csl
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
 # Loading Libraries
+library(bookdown)
 library(readxl)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(scales)
+library(tidyverse)
+library(knitr)
 
 # Loading Data
 table_1 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 2, skip = 2, col_names = TRUE)
@@ -26,13 +34,15 @@ table_4 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 5, skip = 2,
 table_7 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 8, skip = 2, col_names = TRUE)
 ```
 
-## Introduction
+# Introduction
 
 Educational attainment is associated with higher labour force participation, higher income, greater wealth, lower financial stress and healthier behaviours (OECD, 2018). Despite this, individuals, many individuals have debt-averse attitudes which deter them from applying to university (Callender & Mason, 2017). Fees for tertiary education have grown fast over time whereas there has been a flat growth in the wages of young adults aged 25-34 (Preston, 2023). Enrolments and the number of people with outstanding HELP debts has steadily increased (Universities Australia, 2022). 
 
-## Analysis
+# Analysis
 
-### Alana's Part
+The Higher Education Loan Program (HELP) is provided by the Australian Government to eligible students to cover the cost of tertiary education and training. The loan is income-contingent and students are required to repay their loan(s) once their income reaches the minimum threshold through the income tax system. The income-contingency reduces the risk of borrowing for education when the future value of the education or training is not apparent, especially for students from low-income backgrounds [@albrecht1991deferred].
+
+As of 2021-22, the minimum repayment threshold is $47,014. It is projected that HELP debt will total almost $200 billion in 2024–25 and almost one-third of this debt will not be collected. This raises the issue of sustainability of the program [@anao2016]. For debtors who do not earn the minimum threshold, the risk of loan defaults increase and the burden of repayment falls on taxpayers and more successful borrowers [@BaumSandy2016SLPa].
 
 ## Outstanding Debt and Debtors by Year, Age and Sex {#yearsection}
 
@@ -41,10 +51,7 @@ Educational attainment is associated with higher labour force participation, hig
 ```{r loading, include=FALSE, message=FALSE, warning=FALSE}
 table_8 <- read.csv("Data/HELP_DATA_TIDIED.csv")
 
-library(tidyverse)
 library(gridExtra)
-library(knitr)
-library(bookdown)
 library(eeptools)
 ```
 
@@ -184,21 +191,274 @@ The age group with the greatest number of debtors is 20-29. Excluding the group 
 
 ### Anh-Thu's Part
 
-### Chenxi's Part
+# Analysis
 
-## Conclusion
+## Alana's Part
 
-The number of debtors and outstanding debt has steadily increased since 2005. From 2005 to 2021, there has been an increase of 1.82 million people in debt. During this same period, there has been an increase in outstanding debt of $62 billion \@ref(yearsection). Females are more likely to have HELP debt and there is an increasing gap between males and females in debt \@ref(sexsection). It appears with age, the risk of student debt decreases. All age groups increased in debtors and outstanding debt for 2005-2021, except for the age group 0-19, which saw a sudden drop in 2018-2021 \@ref(agesection). Overall, Student debt levels are rising, along with a rise in older people with outstanding debt, especially women  (Preston, 2023).  
+## Income and Outstanding Debt {#income}
 
 ## References
 
-Callender, C., & Mason, G. (2017). Does Student Loan Debt Deter Higher Education Participation? New Evidence from England. Sage Journals, 671(1).
-
-OECD. (2018). Benefits of educational attainment. Department of Education. Australian Government.
-
-Preston, A. (2023). Gender and Australia’s Higher Education Loan Program. The University of Western Australia, Department of Economics UWA Business School. Women in Social & Economic Research (WiSER).
-
-Universities Australia. (2022). 2022 Higher Education Facts and Figures. Universities Australia.
-
-
 ## Appendix
+
+<b> What was the distribution of taxable (HELP repayment) income of HELP debtors in Australian States and Territories in the 2021-22 financial year? </b>
+
+```{r distribution, echo=FALSE, message=FALSE, warning=FALSE}
+
+# Select columns and filter data
+income_dist <- table_7 %>%
+  select('Financial year', 'HELP repayment income', 'ACT', 'NSW', 'NT', 'QLD', 'SA', 'TAS', 'VIC', 'WA') %>%
+  filter(`Financial year` == "2021–22") %>%
+  filter(`HELP repayment income` != "Unknown")
+
+# Pivot data
+pivoted_dist <- income_dist %>%
+  pivot_longer(
+    cols = c('ACT', 'NSW', 'NT', 'QLD', 'SA', 'TAS', 'VIC', 'WA'),
+    names_to = "State",
+    values_to = "Count")
+
+# Create factor to assign order to char type column
+income_factor = c("Up to $9,999", 
+                  "$10,000 to $19,999", 
+                  "$20,000 to $29,999", 
+                  "$30,000 to $39,999", 
+                  "$40,000 to $49,999", 
+                  "$50,000 to $59,999", 
+                  "$60,000 to $69,999", 
+                  "$70,000 to $79,999", 
+                  "$80,000 to $89,999", 
+                  "$90,000 to $99,999",
+                  "$100,000 or more",
+                  "$100,000 to $109,999", 
+                  "$110,000 to $119,999", 
+                  "$120,000 to $129,999", 
+                  "$130,000 or more")
+
+
+# Create plot
+dist_plot <- ggplot(data = pivoted_dist, aes(x = factor(`HELP repayment income`, level = income_factor), y = Count, fill = State)) +
+  geom_bar(stat = "identity") +
+  theme(panel.grid.major = element_line(color = "grey",
+                                        size = 0.5,
+                                        linetype = 3),
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  scale_y_continuous(name = "Count of Debtors", labels = label_comma(), 
+                     breaks = seq(0, 350000, by = 50000)) +
+  xlab("Income Group") +
+  labs(title = "The highest number of HELP debtors earn between $20,000 and $29,999", 
+       subtitle = "There is a postive skew in the distribution of HELP debtor income", 
+       caption = "Data source: Data.gov.au")
+
+```
+
+```{r disttab, echo=FALSE, message=FALSE, warning=FALSE}
+
+# Display table
+kable(income_dist, 
+      col.names = c("Financial Year","HELP Repayment Income", "ACT", "NSW", "NT", "QLD", "SA", "TAS", "VIC", "WA"), 
+      caption = "Table of count of outstanding HELP debtors in each income group by State or Territory in 2021-22")
+
+```
+
+```{r distfig, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center', fig.cap="Distribution of HELP debtor income in Australian States and Territories"}
+
+# Display plot
+dist_plot
+
+```
+
+Table \@ref(tab:disttab) presents the counts of students with outstanding HELP debt in each income group, incremented by $10,000, in all States and Territories in the 2021-22 fiscal year. The distribution of debtors is depicted in Figure \@ref(fig:distfig). Across all income groups, NSW, QLD, and VIC have the highest number of debtors. There are 336,992 outstanding HELP debtors earning between $20,000 and $29,999, the highest of all income groups. The number of debtors diminishes gradually as the income group increases. The income group with the lowest number of outstanding debtors is $120,000 to $129,999, with 19,642 debtors. It is to be noted that the “$130,000 or more” income group is an exception as it does not observe the $10,000 increment rule.
+
+<b> What trend can be observed of the median and mean taxable (HELP repayment) income of HELP debtors in Australia over time? </b>
+
+```{r median, echo=FALSE, message=FALSE, warning=FALSE}
+
+# Select columns and filter data
+median_income <- table_7 %>%
+  select('Financial year', 'HELP repayment income', 'ACT', 'NSW', 'NT', 'QLD', 'SA', 'TAS', 'VIC', 'WA') %>%
+  filter(`HELP repayment income` != "Unknown")
+
+# Pivot data
+median_pivot <- median_income %>%
+  pivot_longer(
+    cols = c('ACT', 'NSW', 'NT', 'QLD', 'SA', 'TAS', 'VIC', 'WA'),
+    names_to = "State",
+    values_to = "Count")
+
+# Change income column from char type to numerical
+median_pivot <- mutate(median_pivot, `HELP repayment income` = case_when(
+    `HELP repayment income` == "Up to $9,999" ~ 9999,
+    `HELP repayment income` == "$10,000 to $19,999" ~ 19999, 
+    `HELP repayment income` == "$20,000 to $29,999" ~ 29999, 
+    `HELP repayment income` == "$30,000 to $39,999" ~ 39999, 
+    `HELP repayment income` == "$40,000 to $49,999" ~ 49999, 
+    `HELP repayment income` == "$50,000 to $59,999" ~ 59999, 
+    `HELP repayment income` == "$60,000 to $69,999" ~ 69999, 
+    `HELP repayment income` == "$70,000 to $79,999" ~ 79999, 
+    `HELP repayment income` == "$80,000 to $89,999" ~ 89999, 
+    `HELP repayment income` == "$90,000 to $99,999" ~ 99999, 
+    `HELP repayment income` == "$100,000 or more" ~ 100000,
+    `HELP repayment income` == "$100,000 to $109,999" ~ 109999,
+    `HELP repayment income` == "$110,000 to $119,999" ~ 119999, 
+    `HELP repayment income` == "$120,000 to $129,999" ~ 129999, 
+    `HELP repayment income` == "$130,000 or more" ~ 130000,
+    is.na(`HELP repayment income`) ~ 0
+    ))
+
+# Create new variables
+median_pivoted <- median_pivot %>%
+  group_by(`Financial year`) %>%
+  summarise(
+    `Count of Debtors` = sum(Count),
+    `Median Income` = sort(rep(`HELP repayment income`,Count))[length(rep(`HELP repayment income`,Count))/2],
+    `Mean Income` = sum(sort(rep(`HELP repayment income`,Count)))/length(sort(rep(`HELP repayment income`,Count)))
+  )
+
+# Change median income column back to char type
+median_pivoted <- mutate(median_pivoted, `Median Income` = case_when(
+    `Median Income` == 9999 ~ "Up to $9,999",
+    `Median Income` == 19999 ~ "$10,000 to $19,999", 
+    `Median Income` == 29999 ~ "$20,000 to $29,999", 
+    `Median Income` == 39999 ~ "$30,000 to $39,999", 
+    `Median Income` == 49999 ~ "$40,000 to $49,999", 
+    `Median Income` == 59999 ~ "$50,000 to $59,999", 
+    `Median Income` == 69999 ~ "$60,000 to $69,999", 
+    `Median Income` == 79999 ~ "$70,000 to $79,999", 
+    `Median Income` == 89999 ~ "$80,000 to $89,999", 
+    `Median Income` == 99999 ~ "$90,000 to $99,999",
+    `Median Income` == 100000 ~ "$100,000 or more",
+    `Median Income` == 109999 ~ "$100,000 to $109,999", 
+    `Median Income` == 119999 ~ "$110,000 to $119,999", 
+    `Median Income` == 129999 ~ "$120,000 to $129,999", 
+    `Median Income` == 130000 ~ "$130,000 or more"
+    ))
+
+# Change mean income column back to char type
+median_pivoted2 <- mutate(median_pivoted, `Mean Income` = case_when(
+    `Mean Income` <= 9999 ~ "Up to $9,999",
+    `Mean Income` <= 19999 ~ "$10,000 to $19,999", 
+    `Mean Income` <= 29999 ~ "$20,000 to $29,999", 
+    `Mean Income` <= 39999 ~ "$30,000 to $39,999", 
+    `Mean Income` <= 49999 ~ "$40,000 to $49,999", 
+    `Mean Income` <= 59999 ~ "$50,000 to $59,999", 
+    `Mean Income` <= 69999 ~ "$60,000 to $69,999", 
+    `Mean Income` <= 79999 ~ "$70,000 to $79,999", 
+    `Mean Income` <= 89999 ~ "$80,000 to $89,999", 
+    `Mean Income` <= 99999 ~ "$90,000 to $99,999",
+    `Mean Income` == 100000 ~ "$100,000 or more",
+    `Mean Income` <= 109999 ~ "$100,000 to $109,999", 
+    `Mean Income` <= 119999 ~ "$110,000 to $119,999", 
+    `Mean Income` <= 129999 ~ "$120,000 to $129,999", 
+    `Mean Income` <= 130000 ~ "$130,000 or more"
+    ))
+
+# Create plot
+median_plot <- ggplot(median_pivoted2, aes(x = `Financial year`)) +
+  geom_line(aes(y = `Median Income`, group = 1, color = "Median")) +
+  geom_point(aes(y = `Median Income`, group = 1, color = "Median")) +
+  geom_line(aes(y = `Mean Income`, group = 1, color = "Mean")) +
+  geom_point(aes(y = `Mean Income`, group = 1, color = "Mean")) +
+  scale_color_manual(values = c(Median = "steelblue", Mean = "darkred"), 
+                     labels = c(Median = "Median income", Mean = "Mean income")) +
+  labs(title = "The median and mean income group of HELP debtors in 2021 was \n$40,000 to $49,999 and $50,000 to $59,999 respectively", 
+       subtitle = "There has been a positive increase in median and mean taxable income over time", 
+       caption = "Data source: Data.gov.au") +
+  ylab("Income Group") +
+  xlab("Year") +
+  guides(col = guide_legend("Legend")) +
+  theme(panel.grid.major = element_line(color = "grey",
+                                        size = 0.5,
+                                        linetype = 3),
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+```
+
+```{r mediantab, echo=FALSE, message=FALSE, warning=FALSE}
+
+# Display the table
+kable(median_pivoted2, 
+      col.names = c("Financial Year", "Count of Outstanding Debtors", "Median Income", "Mean Income"), 
+      caption = "Table of the median and mean taxable income group of outstanding HELP debtors in Australia from 2009-10 to 2021-22")
+
+```
+
+```{r medianfig, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center', fig.cap="Median and mean income of HELP debtors in Australia from 2009 to 2021"}
+
+# Display the plot
+median_plot
+
+```
+
+Table \@ref(tab:mediantab) presents the median and mean (average) income of HELP debtors in Australia from 2009 to 2021 and the trends are illustrated in Figure \@ref(fig:medianfig). The median and average income follow the same positive trend, increasing overall by one income group ($10,000) since 2009. The median typically sits below the average by one income group. In 2009, the median income group was $30,000 to $39,999 and the mean income group was $40,000 to $49,999. By 2021, the median had increased to $40,000 to $49,999 and the average to $50,000 to $59,999. The lowest median and mean income group of HELP debtors were observed in the 2010-11 to 2012-13 and 2015-16 fiscal years, at $20,000 to $29,999 and $30,000 to $39,999 respectively.
+
+
+## Chenxi's Part
+
+## Recoverability of HELP Debt Over Time
+
+In order to investigate whether the Australian Government is able to recover debt issued under the HELP program, cumulative data available from FY07 to FY22 have been translated to annual increase for new debt incurred (including indexation) and repayments received (including compulsory repayments, voluntary repayments and bonus on voluntary repayments which ceased in FY17).
+
+<b> Annual Debt Incurred vs Repayments </b>
+
+``` {r DebtRepaymentTable, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center', fig.cap="TBC"}
+table_1 <- add_column(table_1,'Financial Year'=as.numeric(substr(table_1$Year,1,4))+1)
+table_1 <- arrange(table_1,desc(table_1[9]))
+table_1 <- add_column(table_1,'Annual Incurred (incl. Indexation)'=(table_1$`Total incurred debt ($)`+table_1$`Indexation ($)`)-lag(table_1$`Total incurred debt ($)`+table_1$`Indexation ($)`,order_by=table_1[2]))
+table_1 <- add_column(table_1,'Annual Repayment' = (table_1$`Compulsory repayments ($)`+ifelse(table_1$`OS Levy Compulsory repayments ($)`=="n/a",0,as.numeric(table_1$`OS Levy Compulsory repayments ($)`))+table_1$`Voluntary repayments ($)`+table_1$`Bonus on voluntary repayments ($)`)-lag(table_1$`Compulsory repayments ($)`++ifelse(table_1$`OS Levy Compulsory repayments ($)`=="n/a",0,as.numeric(table_1$`OS Levy Compulsory repayments ($)`))+table_1$`Voluntary repayments ($)`+table_1$`Bonus on voluntary repayments ($)`,order_by=table_1[2]))
+table_1 <- add_column(table_1, 'Annual Repayment Ratio'=table_1$`Annual Repayment`/table_1$`Annual Incurred (incl. Indexation)`)
+table_1 <- arrange(table_1,table_1$`Financial Year`)
+tableDebtRepayment <- table_1[-c(1),c(10:13)]
+kable(tableDebtRepayment,caption = "Annual New Debt Incurred and Repayments")
+
+```
+``` {r DebtRepaymentGraph, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center', fig.cap="Annual New Debt Incurred and Repayments"}
+graphDebtRepayment = ggplot(table_1)+
+  geom_line(aes(x=table_1$`Financial Year`, y=table_1$`Annual Incurred (incl. Indexation)`, color="New Debt Incurred"))+
+  geom_line(aes(x=table_1$`Financial Year`, y=table_1$`Annual Repayment`, color="Repayment"))+
+  geom_line(aes(x=table_1$`Financial Year`, y=table_1$`Annual Repayment Ratio`*8000000000, color="Repayment Ratio (RHS)"), size=3)+
+  scale_x_continuous(breaks=seq(2007,2022,1))+
+  scale_y_continuous("Annual New Debt and Payment ($)",sec.axis=sec_axis(~./8000000000,name="Annual Payment to New Debt Ratio (%)",labels = percent), labels = comma)+
+  xlab("Financial Year")+
+  labs(color="Legend", caption="Data source: Data.gov.au")+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+graphDebtRepayment
+```
+
+Table \@ref(fig:DebtRepaymentGraph) shows significant increase in new debts under the program each year, start at below \$3 billion in FY07 and increasing to over \$10 billion per year in FY18 and FY22. Annual increase in repayments have occurred at a slower rate, but follows an exponential trajectory to FY22. Repayment to new debt ratio have been calculated as primary indicator for recoverability of debt issued under the scheme. Between FY07 to FY16, this indicators shows a concerning trend as it decreased from 38% to 21% as new debt outpaced repayments. However this have recovered substantially in recent years (reaching >100% in FY20 which is an outlier due to low new debt in the year) which means that even as greater amounts are lent under this program year on year, it  still appears to be a sustainable one as annual repayments received have grown steadily over the past 6 years.
+
+<b> Debt Write Off Ratio </b>
+
+``` {r DebtRatioTable, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center', fig.cap="TBC"}
+table_1 <- add_column(table_1,'Annual Debt Writeoff' =table_1$`Value of debts writen off ($)`-lag(table_1$`Value of debts writen off ($)`,order_by=table_1[2]))
+table_1 <- add_column(table_1,'Debt Writeoff Ratio' =table_1$`Annual Debt Writeoff`/table_1$`Annual Incurred (incl. Indexation)`)
+tableDebtWriteoff <- table_1[-c(1),c(10,15)]
+kable(tableDebtWriteoff,caption = "Debt Writeoff as % of Annual New Debt")
+```
+
+``` {r DebtWriteoffGraph, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center', fig.cap="Debt Writeoff as % of Annual New Debt"}
+graphDebtWriteoff = ggplot(table_1)+
+  geom_line(aes(x=table_1$`Financial Year`, y=table_1$`Debt Writeoff Ratio`, color="Debt Writeoff %"))+
+  scale_x_continuous(breaks=seq(2007,2022,1))+
+  scale_y_continuous("Annual New Debt and Payment ($)", labels = percent)+
+  xlab("Financial Year")+
+  labs(color="Legend", caption="Data source: Data.gov.au")+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+graphDebtWriteoff
+```
+In table \@ref(fig:DebtWriteoffGraph) Annual debt writeoff as percentage of new debts is similar to the measure of loss rate measured for major banks. For the year 2019, average loss rate across the 3 major banks (ANZ, CBA, NAB) averages 0.15%. The calculated HELP debt writeoff % for FY is 0.46% [@pwc2019]. While substantially higher than the private banks, the HELP debt writeoff % is not unreasonable given the difference in nature compared to a commercial loan.
+
+# Conclusion
+
+Based on the analysis in \@ref(income), most debtors earn below the average income, while the number of debtors earning above the average diminishes as the income group increases. The skewed distribution in Figure \@ref(fig:distfig) represents the government’s risk in recovering HELP debt in 2021. Up to $20,000 to $29,999, the risk increases as many debtors do not meet the minimum repayment threshold. However, beyond $30,000, as income increases, the government's risk decreases as more repayments are made through the tax system. The increase of median and mean income observed in Figure \@ref(fig:medianfig) indicate an overall inflation of debtor income since 2009, meaning an improved ability to repay the HELP debt. 
+
+The number of debtors and outstanding debt has steadily increased since 2005. From 2005 to 2021, there has been an increase of 1.82 million people in debt. During this same period, there has been an increase in outstanding debt of $62 billion \@ref(yearsection). Females are more likely to have HELP debt and there is an increasing gap between males and females in debt \@ref(sexsection). It appears with age, the risk of student debt decreases. All age groups increased in debtors and outstanding debt for 2005-2021, except for the age group 0-19, which saw a sudden drop in 2018-2021 \@ref(agesection). Overall, Student debt levels are rising, along with a rise in older people with outstanding debt, especially women  (Preston, 2023). 
+
+However, this analysis is limited by the data not accounting for the size of HELP debt incurred and how progressed the debtor is in their career. Further progressed careers and larger debts which may indicate higher education further both may increase the level of income earned, while newer graduates may be in a lower income group.
+
+# References
+
+<div id="refs"></div>
+
+# Appendix
+
