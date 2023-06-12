@@ -107,7 +107,7 @@ kable(table_8_sex,
              digits = 2)
 ```
 
-```{r figure2, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center'}
+```{r figure2, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center', fig.cap="Total outstanding debt and number of debtors by sex from the financial years 2005-06 to 2021-22"}
 table_8_sex_year <- table_8 %>%
   group_by(Sex, Year) %>%
   summarise(mean_number_Debtors = mean(Num_Debtors), 
@@ -154,7 +154,7 @@ kable(table_8_age,
              digits = 2)
 ```
 
-```{r figure3, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center'}
+```{r figure3, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center', fig.cap="Total outstanding debt and number of debtors by age from the financial years 2005-06 to 2021-22"}
 # group by age and year 
 
 table_8_age_year <- table_8 %>%
