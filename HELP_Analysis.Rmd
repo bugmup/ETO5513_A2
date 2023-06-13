@@ -46,7 +46,7 @@ The income-contingency reduces the risk of borrowing for students where the futu
 
 As of 2021-22, the minimum repayment threshold is $47,014. It is projected that HELP debt will total almost $200 billion in 2024–25 and almost one-third will be written off. [@anao2016]. For debtors who do not earn the minimum threshold, the risk of loan defaults increase and the burden of repayment falls on taxpayers and more successful borrowers [@BaumSandy2016SLPa].
 
-This report will attempt to analyse the risks of HELP on its long-term sustainability through the variables of time, age, sex, income, Australian state and recoverability. 
+This report will attempt to analyse the risks of HELP on its long-term sustainability through the variables of time, age, sex, income, and recoverability. Analysis of distribution of income and changes to the median and mean earnings of debtors will be able to inform the expectations of loan recoverability.
 
 
 # Analysis
@@ -201,7 +201,12 @@ Table \@ref(tab:table3) and figure \@ref(fig:figure3) show the age group with th
 
 ## Income and Outstanding Debt {#income}
 
-<b> What was the distribution of taxable (HELP repayment) income of HELP debtors in Australian States and Territories in the 2021-22 financial year? </b>
+This section investigates:
+
+1. *What was the distribution of taxable (HELP repayment) income of HELP debtors in Australian States and Territories in the 2021-22 financial year?*
+2. *What trend can be observed of the median and mean taxable (HELP repayment) income of HELP debtors in Australia over time?*
+
+### Income Distribution {#distribution}
 
 ```{r distribution, echo=FALSE, message=FALSE, warning=FALSE}
 
@@ -235,6 +240,18 @@ income_factor = c("Up to $9,999",
                   "$120,000 to $129,999", 
                   "$130,000 or more")
 
+```
+
+```{r disttab, echo=FALSE, message=FALSE, warning=FALSE}
+
+# Display table
+kable(income_dist, 
+      col.names = c("Financial Year","HELP Repayment Income", "ACT", "NSW", "NT", "QLD", "SA", "TAS", "VIC", "WA"), 
+      caption = "Table of count of outstanding HELP debtors in each income group by State or Territory in 2021-22")
+
+```
+
+```{r distfig, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center', fig.cap="Distribution of HELP debtor income in Australian States and Territories"}
 
 # Create plot
 dist_plot <- ggplot(data = pivoted_dist, aes(x = factor(`HELP repayment income`, level = income_factor), y = Count, fill = State)) +
@@ -250,19 +267,6 @@ dist_plot <- ggplot(data = pivoted_dist, aes(x = factor(`HELP repayment income`,
        subtitle = "There is a postive skew in the distribution of HELP debtor income", 
        caption = "Data source: Data.gov.au")
 
-```
-
-```{r disttab, echo=FALSE, message=FALSE, warning=FALSE}
-
-# Display table
-kable(income_dist, 
-      col.names = c("Financial Year","HELP Repayment Income", "ACT", "NSW", "NT", "QLD", "SA", "TAS", "VIC", "WA"), 
-      caption = "Table of count of outstanding HELP debtors in each income group by State or Territory in 2021-22")
-
-```
-
-```{r distfig, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center', fig.cap="Distribution of HELP debtor income in Australian States and Territories"}
-
 # Display plot
 dist_plot
 
@@ -270,7 +274,7 @@ dist_plot
 
 Table \@ref(tab:disttab) presents the counts of students with outstanding HELP debt in each income group, incremented by $10,000, in all States and Territories in the 2021-22 fiscal year. The distribution of debtors is depicted in Figure \@ref(fig:distfig). Across all income groups, NSW, QLD, and VIC have the highest number of debtors. There are 336,992 outstanding HELP debtors earning between $20,000 and $29,999, the highest of all income groups. The number of debtors diminishes gradually as the income group increases. The income group with the lowest number of outstanding debtors is $120,000 to $129,999, with 19,642 debtors. It is to be noted that the “$130,000 or more” income group is an exception as it does not observe the $10,000 increment rule.
 
-<b> What trend can be observed of the median and mean taxable (HELP repayment) income of HELP debtors in Australia over time? </b>
+### Median and Mean Income {#median}
 
 ```{r median, echo=FALSE, message=FALSE, warning=FALSE}
 
@@ -353,6 +357,19 @@ median_pivoted2 <- mutate(median_pivoted, `Mean Income` = case_when(
     `Mean Income` <= 130000 ~ "$130,000 or more"
     ))
 
+```
+
+```{r mediantab, echo=FALSE, message=FALSE, warning=FALSE}
+
+# Display the table
+kable(median_pivoted2, 
+      col.names = c("Financial Year", "Count of Outstanding Debtors", "Median Income", "Mean Income"), 
+      caption = "Table of the median and mean taxable income group of outstanding HELP debtors in Australia from 2009-10 to 2021-22")
+
+```
+
+```{r medianfig, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center', fig.cap="Median and mean income of HELP debtors in Australia from 2009 to 2021"}
+
 # Create plot
 median_plot <- ggplot(median_pivoted2, aes(x = `Financial year`)) +
   geom_line(aes(y = `Median Income`, group = 1, color = "Median")) +
@@ -371,19 +388,6 @@ median_plot <- ggplot(median_pivoted2, aes(x = `Financial year`)) +
                                         size = 0.5,
                                         linetype = 3),
         axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
-
-```
-
-```{r mediantab, echo=FALSE, message=FALSE, warning=FALSE}
-
-# Display the table
-kable(median_pivoted2, 
-      col.names = c("Financial Year", "Count of Outstanding Debtors", "Median Income", "Mean Income"), 
-      caption = "Table of the median and mean taxable income group of outstanding HELP debtors in Australia from 2009-10 to 2021-22")
-
-```
-
-```{r medianfig, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center', fig.cap="Median and mean income of HELP debtors in Australia from 2009 to 2021"}
 
 # Display the plot
 median_plot
@@ -448,7 +452,7 @@ In table \@ref(fig:DebtWriteoffGraph) Annual debt writeoff as percentage of new 
 
 # Conclusion
 
-Based on the analysis in \@ref(income), most debtors earn below the average income, while the number of debtors earning above the average diminishes as the income group increases. The skewed distribution in Figure \@ref(fig:distfig) represents the government’s risk in recovering HELP debt in 2021. Up to $20,000 to $29,999, the risk increases as many debtors do not meet the minimum repayment threshold. However, beyond $30,000, as income increases, the government's risk decreases as more repayments are made through the tax system. The increase of median and mean income observed in Figure \@ref(fig:medianfig) indicate an overall inflation of debtor income since 2009, meaning an improved ability to repay the HELP debt. This observation is supported by Figure \@ref(fig:DebtRepaymentGraph) which shows significant increase in annual payments received from 2016 reflective of increased debtor income and being pushed into higher repayment brackets.
+Based on the analysis in \@ref(distribution) and \@ref(median), most debtors earn below the average income, while the number of debtors earning above the average diminishes as the income group increases. The skewed distribution in Figure \@ref(fig:distfig) represents the government’s risk in recovering HELP debt in 2021. Up to $20,000 to $29,999, the risk increases as many debtors do not meet the minimum repayment threshold. However, beyond $30,000, as income increases, the government's risk decreases as more repayments are made through the tax system. The increase of median and mean income observed in Figure \@ref(fig:medianfig) indicate an overall inflation of debtor income since 2009, meaning an improved ability to repay the HELP debt. This observation is supported by Figure \@ref(fig:DebtRepaymentGraph) which shows significant increase in annual payments received from 2016 reflective of increased debtor income and being pushed into higher repayment brackets.
 
 The number of debtors and outstanding debt has steadily increased since 2005. From 2005 to 2021, there has been an increase of 1.82 million people in debt. During this same period, there has been an increase in outstanding debt of $62 billion \@ref(yearsection). Females are more likely to have HELP debt and there is an increasing gap between males and females in debt \@ref(sexsection). It appears with age, the risk of student debt decreases. All age groups increased in debtors and outstanding debt for 2005-2021, except for the age group 0-19, which saw a sudden drop in 2018-2021 \@ref(agesection). Overall, Student debt levels are rising, along with a rise in older people with outstanding debt, especially women [@preston_gender_2023]. 
 
