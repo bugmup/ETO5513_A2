@@ -398,9 +398,14 @@ Table \@ref(tab:mediantab) presents the median and mean (average) income of HELP
 
 ## Recoverability of HELP Debt Over Time
 
+This section investigates:
+
+1. *How has recoverability (annual debt incurred vs repayment) of HELP debt changed over the period FY07 to FY22*
+2. *Has there been a growth in HELP debt write-offs and how does this compare with the banking industry*
+
 In order to investigate whether the Australian Government is able to recover debt issued under the HELP program, cumulative data available from FY07 to FY22 have been translated to annual increase for new debt incurred (including indexation) and repayments received (including compulsory repayments, voluntary repayments and bonus on voluntary repayments which ceased in FY17).
 
-<b> Annual Debt Incurred vs Repayments </b>
+### Annual Debt Incurred vs Repayments {#DebtAndRepayments}
 
 ``` {r DebtRepaymentTable, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center', fig.cap="TBC"}
 table_1 <- add_column(table_1,'Financial Year'=as.numeric(substr(table_1$Year,1,4))+1)
@@ -426,9 +431,9 @@ graphDebtRepayment = ggplot(table_1)+
 graphDebtRepayment
 ```
 
-Graph \@ref(fig:DebtRepaymentGraph) shows significant increase in new debts under the program each year, start at below \$3 billion in FY07 and increasing to over \$10 billion per year in FY18 and FY22. Annual increase in repayments have occurred at a slower rate, but follows an exponential trajectory to FY22. Repayment to new debt ratio have been calculated as primary indicator for recoverability of debt issued under the scheme. Between FY07 to FY16, this indicators shows a concerning trend as it decreased from 38% to 21% as new debt outpaced repayments. However this have recovered substantially in recent years (reaching >100% in FY20 which is an outlier due to low new debt in the year) which means that even as greater amounts are lent under this program year on year, it  still appears to be a sustainable one as annual repayments received have grown steadily over the past 6 years.
+Graph \@ref(fig:DebtRepaymentGraph) shows significant increase in new debts under the program each year, start at below \$3 billion in FY07 and increasing to over \$10 billion per year in FY18 and FY22. Annual increase in repayments have occurred at a slower rate, but follows an exponential trajectory to FY22. Repayment to new debt ratio have been calculated as primary indicator for recoverability of debt issued under the scheme. Between FY07 to FY16, this indicators shows a concerning trend as it decreased from 38% to 21% as new debt outpaced repayments. However this have recovered substantially in recent years (reaching >100% in FY20 which is an outlier due to low new debt in the year) which means that even as greater amounts are lent under this program year on year, it still appears to be a sustainable one as annual repayments received have grown steadily over the past 6 years.
 
-<b> Debt Write Off Ratio </b>
+### Debt Write Off Ratio {#DebtWriteoff}
 
 ``` {r DebtRatioTable, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center', fig.cap="TBC"}
 table_1 <- add_column(table_1,'Annual Debt Writeoff' =table_1$`Value of debts writen off ($)`-lag(table_1$`Value of debts writen off ($)`,order_by=table_1[2]))
@@ -448,7 +453,7 @@ graphDebtWriteoff = ggplot(table_1)+
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 graphDebtWriteoff
 ```
-In table \@ref(fig:DebtWriteoffGraph) Annual debt writeoff as percentage of new debts is similar to the measure of loss rate measured for major banks. For the year 2019, average loss rate across the 3 major banks (ANZ, CBA, NAB) averages 0.15%. The calculated HELP debt writeoff % for FY is 0.46% [@pwc2019]. While substantially higher than the private banks, the HELP debt writeoff % is not unreasonable given the difference in nature compared to a commercial loan.
+In table \@ref(fig:DebtWriteoffGraph) Annual debt writeoff as percentage of new debts is similar to the measure of loss rate measured for major banks. For the year 2019, average loss rate across the 3 major banks (ANZ, CBA, NAB) averages 0.15% [@pwc2019]. The calculated HELP debt writeoff % for FY is 0.46%, while substantially higher than the private banks, the HELP debt writeoff % is not unreasonable given the difference in nature compared to a commercial loan.
 
 # Conclusion
 
