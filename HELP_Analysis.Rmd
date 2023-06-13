@@ -46,26 +46,19 @@ The income-contingency reduces the risk of borrowing for students where the futu
 
 As of 2021-22, the minimum repayment threshold is $47,014. It is projected that HELP debt will total almost $200 billion in 2024–25 and almost one-third will be written off. [@anao2016]. For debtors who do not earn the minimum threshold, the risk of loan defaults increase and the burden of repayment falls on taxpayers and more successful borrowers [@BaumSandy2016SLPa].
 
-This report will attempt to analyse the risks of HELP on its long-term sustainability through answering the questions of:
-
-1.	<i>Alana’s</i>
-
-2.	<i>Alana’s</i>
-
-3.	<i>What was the distribution of taxable (HELP repayment) income of HELP debtors in Australian States and Territories in the 2021-22 financial year?</i>
-
-4.	<i>What trend can be observed of the median and mean taxable (HELP repayment) income of HELP debtors in Australia over time?</i>
-
-5.	<i>Chenxi’s</i>
-
-6.	<i>Chenxi’s</i>
+This report will attempt to analyse the risks of HELP on its long-term sustainability through the variables of time, age, sex, income, Australian state and recoverability. 
 
 
 # Analysis
 
 ## Outstanding Debt and Debtors by Year, Age and Sex {#yearsection}
 
-### How does total outstanding debt and number of debtors change from the financial years 2005-06 to 2021-22? {#yearsection}
+This section will investigate: 
+
+1. *How does total outstanding debt and number of debtors change from the financial years 2005-06 to 2021-22?* {#yearsection}
+2. *How does total outstanding debt and number of debtors change over time by i) sex and ii) age group?*
+
+### Total Outstanding Debt and Total Debtors 2005-2022
 
 ```{r loading, include=FALSE, message=FALSE, warning=FALSE}
 
