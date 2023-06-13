@@ -51,14 +51,14 @@ This report will attempt to analyse the risks of HELP on its long-term sustainab
 
 # Analysis
 
-## Outstanding Debt and Debtors by Year, Age and Sex {#yearsection}
+## Outstanding Debt and Debtors by Year, Age and Sex 
 
 This section will investigate: 
 
-1. *How does total outstanding debt and number of debtors change from the financial years 2005-06 to 2021-22?* {#yearsection}
+1. *How does total outstanding debt and number of debtors change from the financial years 2005-06 to 2021-22?*
 2. *How does total outstanding debt and number of debtors change over time by i) sex and ii) age group?*
 
-### Total Outstanding Debt and Total Debtors 2005-2022
+### Total Outstanding Debt and Total Debtors 2005-2022 {#yearsection}
 
 ```{r loading, include=FALSE, message=FALSE, warning=FALSE}
 
@@ -102,7 +102,7 @@ totalDebtors_plot <- ggplot(data = table_8_year, aes(x = Year, y = `Total Number
 grid.arrange(totalOut_plot, totalDebtors_plot, nrow = 2)
 ```
 
-The total number of debtors increased from 1.18 million in 2005 to 3 million in 2021.  The outstanding debt total was $12.39 billion in 2005 which rose to $74.39 billion in 2021. A rapid increase can be seen from 2010 to 2015, where total outstanding debt rose by $25.32 billion. Interestingly, a small decrease in debtors can be observed from 2018 to 2019 which may be a factor for the plateau in outstanding debt from years 2018-2020. 
+Table \@ref(tab:table1)and Figure \@ref(fig:figure1) shows the total number of debtors increased from 1.18 million in 2005 to 3 million in 2021.  The outstanding debt total was $12.39 billion in 2005 which rose to $74.39 billion in 2021. A rapid increase can be seen from 2010 to 2015, where total outstanding debt rose by $25.32 billion. Interestingly, a small decrease in debtors can be observed from 2018 to 2019 which may be a factor for the plateau in outstanding debt from years 2018-2020. 
 
 ### Average Debtors and Oustanding Debt by Sex {#sexsection}
 
@@ -148,7 +148,7 @@ grid.arrange(plot3, plot4, nrow = 2)
 
 ```
 
-Grouping mean debtors and outstanding debt by sex shows that there are significantly more female debtors than males. The reason is likely an increase in university enrolments, with female enrolments growing faster than male enrolments [@preston_gender_2023]. From 2005-2021, on average, 158, 046.2 females are in debt, compared to 103,717.2 males. This difference in average of 54,329 female debtors could factor for the $750 million difference in average outstanding debt. An increasing gap can be observed between the number of debtors and outstanding debt between females and males. 
+Table and \@ref(tab:table2) and Figure \@ref(fig:figure2) groups mean debtors and outstanding debt by sex, revealing that there are significantly more female debtors than males. The reason is likely an increase in university enrolments, with female enrollments growing faster than male enrollments [@preston_gender_2023]. From 2005-2021, on average, 158, 046.2 females are in debt, compared to 103,717.2 males. This difference in average of 54,329 female debtors could factor for the $750 million difference in average outstanding debt. An increasing gap can be observed between the number of debtors and outstanding debt between females and males. 
 
 ### Average Debtors and Oustanding Debt by Age Group {#agesection}
 
@@ -197,7 +197,7 @@ plot6 <- ggplot(data = table_8_age_year, aes(x = Year, y = mean_OustandingDebt, 
 grid.arrange(plot5, plot6, nrow = 2)
 ```
 
-The age group with the greatest number of debtors is 20-29. Excluding the group for unknown age, 70+ has the lowest number of debtors. The same pattern can be observed for mean outstanding debt. Younger age groups have a higher risk of debt than older age groups with the exception of 0-19. An increase in the number of debtors and outstanding debt can be seen for all age groups.  From 2018-2021, there is a sudden drop in number of debtors for 0–19-year-olds, which also results in a drop in outstanding debt. 
+Table \@ref(tab:table3) and figure \@ref(fig:figure3) show the age group with the greatest number of debtors is 20-29. Excluding the group for unknown age, 70+ has the lowest number of debtors. The same pattern can be observed for mean outstanding debt. Younger age groups have a higher risk of debt than older age groups with the exception of 0-19. An increase in the number of debtors and outstanding debt can be seen for all age groups.  From 2018-2021, there is a sudden drop in number of debtors for 0–19-year-olds, which also results in a drop in outstanding debt. 
 
 ## Income and Outstanding Debt {#income}
 
@@ -457,6 +457,3 @@ However, this analysis is limited by the data not accounting for the size of HEL
 # References
 
 <div id="refs"></div>
-
-# Appendix
-
