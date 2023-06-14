@@ -15,14 +15,23 @@ In this folder:
 
 ## Requirements
 
-This project has been built on R ver 4.3.0 (April 2023) and may be incompatible with future versions. 
+This project has been built on R ver 4.3.0 (April 2023) and may be incompatible with different versions. 
 If you encounter issues, download R 4.3.0 from [CRAN](https://cran.r-project.org/).
 
-The R packages required for this reproduction of this project:
+Some of the R packages and versions required for this reproduction of this project:
 
-- ???
-- ???
-- ???
+- bookdown [ver 0.34]
+- dplyr [ver 1.1.2]
+- eeptools [ver 1.2.5]
+- ggplot2 [ver 3.4.2]
+- gridExtra [ver 2.3]
+- knitr [ver 1.43]
+- readxl [ver 1.4.2]
+- scales [ver 1.2.1]
+- tidyr [ver 1.3.0]
+- tidyverse [ver 2.0.0]
+
+For the full list of packages and versions used to build this project, see the packages file. 
 
 ## How to install and run
 
@@ -36,4 +45,4 @@ This report has been prepared by Alana Dabelstein, Anh-Thu Hoang, and Chenxi Zha
 
 ## License
 
-This report is available under Creative Commons Zero v1.0 Universal. See the LICENSE for more info.
+This report is available under Creative Commons Zero v1.0 Universal. See the LICENSE file for more info.
