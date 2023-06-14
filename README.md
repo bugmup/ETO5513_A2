@@ -15,6 +15,9 @@ In this folder:
 
 ## Requirements
 
+This project has been built on R ver 4.3.0 (April 2023) and may be incompatible with future versions. 
+If you encounter issues, download R 4.3.0 from [CRAN](https://cran.r-project.org/).
+
 The R packages required for this reproduction of this project:
 
 - ???
@@ -23,8 +26,9 @@ The R packages required for this reproduction of this project:
 
 ## How to install and run
 
-???
-
+- When installing the project for the first time, call renv::restore() and enter Y when prompted to install the packages required.
+- The html report can be reproduced by knitting the project from the HELP_Analysis.Rmd file.
+- If prompted, accept and install any new dependencies.
 
 ## Credits
 
