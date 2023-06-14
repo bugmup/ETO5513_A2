@@ -2,7 +2,7 @@
 
 ## Project Description
 
-This project examines the risks associated with the Australian Government's Higher Education Loan Program (HELP).
+This project examines the total value, growth, demographic distribution and risks associated with the Australian Government's Higher Education Loan Program (HELP) over the period 2005-2022.
 
 ## Data
 
@@ -10,8 +10,8 @@ This folder contains the .xlsx and .csv data files.
 
 In this folder:
 
-- The .xlsx data set of HELP statistics retrieved from [Data.gov.au](https://data.gov.au/dataset/ds-dga-ce4c58ec-c930-4a05-8a37-f244d960e5f8/details?q=taxation%20statistics)
-- The tidied .csv data table from Table 8 of the original data set
+- help-statistics-2021-2022.xlsx: The .xlsx data set of HELP statistics retrieved from [Data.gov.au](https://data.gov.au/dataset/ds-dga-ce4c58ec-c930-4a05-8a37-f244d960e5f8/details?q=taxation%20statistics)
+- HELP_DATA_TIDIED.csv: The tidied .csv data table from Table 8 of the original data set
 
 ## Requirements
 
