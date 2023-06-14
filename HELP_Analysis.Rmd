@@ -17,6 +17,7 @@ csl: apa.csl
 knitr::opts_chunk$set(echo = TRUE)
 
 # Loading Libraries
+library(markdown)
 library(bookdown)
 library(dplyr)
 library(eeptools)
