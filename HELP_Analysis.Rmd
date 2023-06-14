@@ -18,22 +18,20 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Loading Libraries
 library(bookdown)
-library(readxl)
 library(dplyr)
-library(tidyr)
-library(ggplot2)
-library(scales)
-library(tidyverse)
-library(knitr)
-library(gridExtra)
 library(eeptools)
+library(ggplot2)
+library(gridExtra)
+library(knitr)
+library(readxl)
+library(scales)
+library(tidyr)
+library(tidyverse)
 
 # Loading Data
 table_1 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 2, skip = 2, col_names = TRUE)
-#table_2 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 3, skip = 2, col_names = TRUE)
-#table_3 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 4, skip = 2, col_names = TRUE)
-#table_4 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 5, skip = 2, col_names = TRUE)
 table_7 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 8, skip = 2, col_names = TRUE)
+table_8 <- read.csv("Data/HELP_DATA_TIDIED.csv")
 ```
 
 # Introduction
@@ -48,7 +46,6 @@ As of 2021-22, the minimum repayment threshold is $47,014. It is projected that 
 
 This report will attempt to analyse the risks of HELP on its long-term sustainability through the variables of time, age, sex, income, and recoverability. Analysis of distribution of income and changes to the median and mean earnings of debtors will be able to inform the expectations of loan recoverability.
 
-
 # Analysis
 
 ## Outstanding Debt and Debtors by Year, Age and Sex 
@@ -59,12 +56,6 @@ This section will investigate:
 2. *How does total outstanding debt and number of debtors change over time by i) sex and ii) age group?*
 
 ### Total Outstanding Debt and Total Debtors 2005-2022 {#yearsection}
-
-```{r loading, include=FALSE, message=FALSE, warning=FALSE}
-
-table_8 <- read.csv("Data/HELP_DATA_TIDIED.csv")
-
-```
 
 ```{r table1, message=FALSE, warning=FALSE, echo=FALSE}
 # Group By Year 
