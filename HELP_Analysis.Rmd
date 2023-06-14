@@ -11,6 +11,8 @@ output:
     fig_height: 5
 bibliography: references.bib
 csl: apa.csl
+nocite: |
+  @CRAN, @RStudio
 ---
 
 ```{r setup, include=FALSE}
