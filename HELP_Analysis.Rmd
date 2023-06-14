@@ -33,6 +33,7 @@ library(tidyverse)
 table_1 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 2, skip = 2, col_names = TRUE)
 table_7 <- read_xlsx("Data/help-statistics-2021-2022.xlsx", sheet = 8, skip = 2, col_names = TRUE)
 table_8 <- read.csv("Data/HELP_DATA_TIDIED.csv")
+
 ```
 
 # Introduction
@@ -45,7 +46,7 @@ The income-contingency reduces the risk of borrowing for students where the futu
 
 As of 2021-22, the minimum repayment threshold is $47,014. It is projected that HELP debt will total almost $200 billion in 2024–25 and almost one-third will be written off. [@anao2016]. For debtors who do not earn the minimum threshold, the risk of loan defaults increase and the burden of repayment falls on taxpayers and more successful borrowers [@BaumSandy2016SLPa].
 
-This report will attempt to analyse the risks of HELP on its long-term sustainability through the variables of time, age, sex, income, and recoverability. Analysis of distribution of income and changes to the median and mean earnings of debtors will be able to inform the expectations of loan recoverability, which is also supported through an examination of annual repayments and new loans issued under the program, as well as comparison of debt writeoff with commercial banks.
+Using data retrieved from @dataSet2022, this report will attempt to analyse the risks of HELP on its long-term sustainability through the variables of time, age, sex, income, and recoverability. Analysis of distribution of income and changes to the median and mean earnings of debtors will be able to inform the expectations of loan recoverability, which is also supported through an examination of annual repayments and new loans issued under the program, as well as comparison of debt writeoff with commercial banks.
 
 # Analysis
 
