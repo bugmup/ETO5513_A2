@@ -36,6 +36,9 @@ For the full list of packages and versions used to build this project, see the p
 ## How to install and run
 
 - When installing the project for the first time, call renv::restore() and enter Y when prompted to install the packages required.
+- If download errors occur:
+    - run options("download.file.method"="libcurl") to ensure the method is "libcurl"
+    - then run RENV_DOWNLOAD_FILE_METHOD = "libcurl"
 - The html report can be reproduced by knitting the project from the HELP_Analysis.Rmd file.
 - If prompted, accept and install any new dependencies.
 
