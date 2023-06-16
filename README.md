@@ -20,16 +20,16 @@ If you encounter issues, download R 4.3.0 from [CRAN](https://cran.r-project.org
 
 Some of the R packages and versions required for this reproduction of this project:
 
-- bookdown [ver 0.34]
-- dplyr [ver 1.1.2]
-- eeptools [ver 1.2.5]
-- ggplot2 [ver 3.4.2]
-- gridExtra [ver 2.3]
-- knitr [ver 1.43]
-- readxl [ver 1.4.2]
-- scales [ver 1.2.1]
-- tidyr [ver 1.3.0]
-- tidyverse [ver 2.0.0]
+- bookdown [0.34]
+- dplyr [1.1.2]
+- eeptools [ 1.2.5]
+- ggplot2 [3.4.2]
+- gridExtra [2.3]
+- knitr [1.42]
+- readxl [1.4.2]
+- scales [1.2.1]
+- tidyr [1.3.0]
+- tidyverse [2.0.0]
 
 For the full list of packages and versions used to build this project, see the packages file. 
 
